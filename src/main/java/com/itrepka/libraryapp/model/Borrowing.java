@@ -1,7 +1,14 @@
 package com.itrepka.libraryapp.model;
 
+import lombok.*;
+
 import java.time.OffsetDateTime;
 
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
+@EqualsAndHashCode(of = "borrowingId")
 public class Borrowing {
     private Long borrowingId;
     private Reader borrowingReader;
