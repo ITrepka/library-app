@@ -1,11 +1,7 @@
-package com.itrepka.libraryapp.model;
+package com.itrepka.libraryapp.service.dto;
 
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import java.time.OffsetDateTime;
 import java.util.List;
 
@@ -14,18 +10,15 @@ import java.util.List;
 @NoArgsConstructor
 @Data
 @EqualsAndHashCode(of = "bookId")
-@Entity
-public class Book {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+public class BookDto {
     private Long bookId;
     private String title;
     private Integer pageCount;
     private OffsetDateTime publishedDate;
-    private List<Author> authors;
+    private List<Long> authorsIds;
     private String shortDescription;
     private String longDescription;
     private String thumbnailUrl;
-    private List<Category> categories;
-    private List<BookCopy> bookCopies;
+    private List<Integer> categoriesIds;
+    private List<Long> bookCopiesIds;
 }
