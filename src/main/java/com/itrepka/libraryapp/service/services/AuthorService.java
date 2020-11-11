@@ -4,6 +4,7 @@ import com.itrepka.libraryapp.model.Author;
 import com.itrepka.libraryapp.repository.AuthorRepository;
 import com.itrepka.libraryapp.service.dto.AuthorDto;
 import com.itrepka.libraryapp.service.dto.CreateUpdateAuthorDto;
+import com.itrepka.libraryapp.service.exception.AuthorAlreadyExistException;
 import com.itrepka.libraryapp.service.exception.AuthorNotFoundException;
 import com.itrepka.libraryapp.service.mapper.AuthorDtoMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,16 +35,30 @@ public class AuthorService {
     }
 
     @Transactional
-    public AuthorDto addNewAuthor(CreateUpdateAuthorDto createUpdateAuthorDto) {
+    public AuthorDto addNewAuthor(CreateUpdateAuthorDto createUpdateAuthorDto) throws AuthorAlreadyExistException {
+        boolean isExist = checkIsExist(createUpdateAuthorDto.getName(),
+                createUpdateAuthorDto.getSurname(), createUpdateAuthorDto.getBirthYear());
+
+        if (isExist) {
+            throw new AuthorAlreadyExistException("Author already exist");
+        }
+
         Author author = authorDtoMapper.toModel(createUpdateAuthorDto);
         Author savedAuthor = authorRepository.save(author);
         return authorDtoMapper.toDto(savedAuthor);
     }
 
     @Transactional
-    public AuthorDto updateAuthorById(long id, CreateUpdateAuthorDto createUpdateAuthorDto) throws AuthorNotFoundException {
+    public AuthorDto updateAuthorById(long id, CreateUpdateAuthorDto createUpdateAuthorDto) throws AuthorNotFoundException, AuthorAlreadyExistException {
         Author author = authorRepository.findById(id)
                 .orElseThrow(() -> new AuthorNotFoundException("Not found author with id = " + id));
+
+        boolean isExist = checkIsExist(createUpdateAuthorDto.getName(),
+                createUpdateAuthorDto.getSurname(), createUpdateAuthorDto.getBirthYear());
+
+        if (isExist) {
+            throw new AuthorAlreadyExistException("Author already exist");
+        }
 
         author.setName(createUpdateAuthorDto.getName());
         author.setSurname(createUpdateAuthorDto.getSurname());
@@ -62,5 +77,11 @@ public class AuthorService {
                 .orElseThrow(() -> new AuthorNotFoundException("Not found author with id = " + id));
         authorRepository.deleteById(id);
         return authorDtoMapper.toDto(author);
+    }
+
+    private boolean checkIsExist(String name, String surname, Integer birthYear) {
+        return getAllAuthors().stream()
+                .anyMatch(author -> author.getName().equalsIgnoreCase(name)
+                        && author.getSurname().equalsIgnoreCase(surname) && author.getBirthYear().equals(birthYear));
     }
 }
