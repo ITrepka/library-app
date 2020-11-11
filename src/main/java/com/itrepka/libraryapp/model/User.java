@@ -8,12 +8,13 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@EqualsAndHashCode(of = "readerId")
-public class Reader {
-    private Long readerId;
+@EqualsAndHashCode(of = "userId")
+public class User {
+    private Long userId;
     private String email;
     private String password;
     private Double penaltyForBooksNotReturnedOnTime;
     private String personalData;
     private List<Borrowing> borrowings;
+    private Role role;
 }

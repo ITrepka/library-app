@@ -11,7 +11,7 @@ import java.time.OffsetDateTime;
 @EqualsAndHashCode(of = "borrowingId")
 public class Borrowing {
     private Long borrowingId;
-    private Reader borrowingReader;
+    private User borrowingUser;
     private BookCopy bookCopy;
     private OffsetDateTime borrowingBookDate;
     private OffsetDateTime returningBookDate;
