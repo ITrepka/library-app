@@ -1,0 +1,40 @@
+package com.itrepka.libraryapp.service.mapper;
+
+import com.itrepka.libraryapp.model.Author;
+import com.itrepka.libraryapp.model.Book;
+import com.itrepka.libraryapp.service.dto.AuthorDto;
+import com.itrepka.libraryapp.service.dto.CreateUpdateAuthorDto;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+@Service
+public class AuthorDtoMapper {
+    public AuthorDto toDto(Author author) {
+        List<Long> booksIds = author.getCreatedBooks().stream().map(Book::getBookId).collect(Collectors.toList());
+        return AuthorDto.builder()
+                .authorId(author.getAuthorId())
+                .name(author.getName())
+                .surname(author.getSurname())
+                .nickname(author.getNickname())
+                .birthplace(author.getBirthplace())
+                .birthYear(author.getBirthYear())
+                .deathYear(author.getDeathYear())
+                .createdBooksIds(booksIds)
+                .build();
+    }
+
+    public Author toModel(CreateUpdateAuthorDto createUpdateAuthorDto) {
+        return Author.builder()
+                .authorId(null)
+                .name(createUpdateAuthorDto.getName())
+                .surname(createUpdateAuthorDto.getSurname())
+                .nickname(createUpdateAuthorDto.getNickname())
+                .birthplace(createUpdateAuthorDto.getBirthplace())
+                .birthYear(createUpdateAuthorDto.getBirthYear())
+                .deathYear(createUpdateAuthorDto.getDeathYear())
+                .createdBooks(null)
+                .build();
+    }
+}
