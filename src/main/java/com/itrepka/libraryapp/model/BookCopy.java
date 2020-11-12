@@ -15,7 +15,7 @@ public class BookCopy {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long bookCopyId;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Book book;
     @ManyToMany
     private List<Borrowing> borrowings;

@@ -26,6 +26,6 @@ public class Book {
     private String thumbnailUrl;
     @ManyToMany
     private List<Category> categories;
-    @OneToMany(mappedBy = "book")
+    @OneToMany(mappedBy = "book", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<BookCopy> bookCopies;
 }
