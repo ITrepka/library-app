@@ -21,5 +21,6 @@ public class Author {
     private Integer deathYear;
     private String birthplace;
     private String nickname;
+    @ManyToMany
     private List<Book> createdBooks;
 }

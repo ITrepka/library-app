@@ -2,10 +2,7 @@ package com.itrepka.libraryapp.model;
 
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.OffsetDateTime;
 import java.util.List;
 
@@ -22,10 +19,13 @@ public class Book {
     private String title;
     private Integer pageCount;
     private OffsetDateTime publishedDate;
+    @ManyToMany
     private List<Author> authors;
     private String shortDescription;
     private String longDescription;
     private String thumbnailUrl;
+    @ManyToMany
     private List<Category> categories;
+    @OneToMany(mappedBy = "book")
     private List<BookCopy> bookCopies;
 }
