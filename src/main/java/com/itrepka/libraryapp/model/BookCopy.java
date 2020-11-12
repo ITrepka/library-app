@@ -2,6 +2,7 @@ package com.itrepka.libraryapp.model;
 
 import lombok.*;
 
+import javax.persistence.*;
 import java.util.List;
 
 @Builder
@@ -9,8 +10,13 @@ import java.util.List;
 @NoArgsConstructor
 @Data
 @EqualsAndHashCode(of = "bookCopyId")
+@Entity
 public class BookCopy {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long bookCopyId;
+    @ManyToOne
     private Book book;
+    @ManyToMany
     private List<Borrowing> borrowings;
 }
