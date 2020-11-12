@@ -2,6 +2,7 @@ package com.itrepka.libraryapp.controller;
 
 import com.itrepka.libraryapp.service.dto.AuthorDto;
 import com.itrepka.libraryapp.service.dto.CreateUpdateAuthorDto;
+import com.itrepka.libraryapp.service.exception.AuthorAlreadyExistException;
 import com.itrepka.libraryapp.service.exception.AuthorNotFoundException;
 import com.itrepka.libraryapp.service.services.AuthorService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,12 +27,12 @@ public class AuthorController {
     }
 
     @PostMapping
-    public AuthorDto addNewAuthor(@RequestBody CreateUpdateAuthorDto createUpdateAuthorDto) {
+    public AuthorDto addNewAuthor(@RequestBody CreateUpdateAuthorDto createUpdateAuthorDto) throws AuthorAlreadyExistException {
         return authorService.addNewAuthor(createUpdateAuthorDto);
     }
 
     @PutMapping("/{id}")
-    public AuthorDto updateAuthorById(@PathVariable long id, @RequestBody CreateUpdateAuthorDto createUpdateAuthorDto) throws AuthorNotFoundException {
+    public AuthorDto updateAuthorById(@PathVariable long id, @RequestBody CreateUpdateAuthorDto createUpdateAuthorDto) throws AuthorNotFoundException, AuthorAlreadyExistException {
         return authorService.updateAuthorById(id, createUpdateAuthorDto);
     }
 
