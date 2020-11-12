@@ -17,7 +17,9 @@ public class User {
     private String email;
     private String password;
     private Double penaltyForBooksNotReturnedOnTime;
-    private String personalData;
+    private String name;
+    private String surname;
+    private String address;
     @OneToMany(mappedBy = "borrowingUser")
     private List<Borrowing> borrowings;
     private Role role;
