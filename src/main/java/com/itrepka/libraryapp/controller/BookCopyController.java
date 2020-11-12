@@ -3,6 +3,7 @@ package com.itrepka.libraryapp.controller;
 import com.itrepka.libraryapp.service.dto.BookCopyDto;
 import com.itrepka.libraryapp.service.dto.CreateUpdateBookCopyDto;
 import com.itrepka.libraryapp.service.exception.BookCopyNotFoundException;
+import com.itrepka.libraryapp.service.exception.BookNotFoundException;
 import com.itrepka.libraryapp.service.services.BookCopyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -26,12 +27,12 @@ public class BookCopyController {
     }
 
     @PostMapping
-    public BookCopyDto addNewBookCopy(@RequestBody CreateUpdateBookCopyDto createUpdateBookCopyDto) {
+    public BookCopyDto addNewBookCopy(@RequestBody CreateUpdateBookCopyDto createUpdateBookCopyDto) throws BookNotFoundException {
         return bookCopyService.addNewBookCopy(createUpdateBookCopyDto);
     }
 
     @PutMapping("/{id}")
-    public BookCopyDto updateBookCopyById(@PathVariable long id, @RequestBody CreateUpdateBookCopyDto createUpdateBookCopyDto) throws BookCopyNotFoundException {
+    public BookCopyDto updateBookCopyById(@PathVariable long id, @RequestBody CreateUpdateBookCopyDto createUpdateBookCopyDto) throws BookCopyNotFoundException, BookNotFoundException {
         return bookCopyService.updateBookCopyById(id, createUpdateBookCopyDto);
     }
 
