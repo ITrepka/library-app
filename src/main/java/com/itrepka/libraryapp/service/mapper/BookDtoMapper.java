@@ -8,6 +8,7 @@ import com.itrepka.libraryapp.service.dto.BookDto;
 import com.itrepka.libraryapp.service.dto.CreateUpdateBookDto;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -34,9 +35,9 @@ public class BookDtoMapper {
     public Book toModel(CreateUpdateBookDto createUpdateBookDto) {
         return Book.builder()
                 .bookId(null)
-                .authors(null)
-                .bookCopies(null)
-                .categories(null)
+                .authors(new ArrayList<>())
+                .bookCopies(new ArrayList<>())
+                .categories(new ArrayList<>())
                 .title(createUpdateBookDto.getTitle())
                 .shortDescription(createUpdateBookDto.getTitle())
                 .longDescription(createUpdateBookDto.getLongDescription())

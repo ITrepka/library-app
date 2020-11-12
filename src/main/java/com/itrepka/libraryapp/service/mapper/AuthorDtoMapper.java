@@ -6,6 +6,7 @@ import com.itrepka.libraryapp.service.dto.AuthorDto;
 import com.itrepka.libraryapp.service.dto.CreateUpdateAuthorDto;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -34,7 +35,7 @@ public class AuthorDtoMapper {
                 .birthplace(createUpdateAuthorDto.getBirthplace())
                 .birthYear(createUpdateAuthorDto.getBirthYear())
                 .deathYear(createUpdateAuthorDto.getDeathYear())
-                .createdBooks(null)
+                .createdBooks(new ArrayList<>())
                 .build();
     }
 }

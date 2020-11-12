@@ -8,6 +8,7 @@ import com.itrepka.libraryapp.service.dto.CreateUpdateCategoryDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -29,7 +30,7 @@ public class CategoryDtoMapper {
         return Category.builder()
                 .categoryId(null)
                 .name(createUpdateCategoryDto.getName())
-                .books(null)
+                .books(new ArrayList<>())
                 .build();
     }
 }

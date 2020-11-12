@@ -6,6 +6,7 @@ import com.itrepka.libraryapp.service.dto.CreateUserDto;
 import com.itrepka.libraryapp.service.dto.UserDto;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -31,7 +32,7 @@ public class UserDtoMapper {
         return User.builder()
                 .userId(null)
                 .penaltyForBooksNotReturnedOnTime(null)
-                .borrowings(null)
+                .borrowings(new ArrayList<>())
                 .password(null)
                 .role(null)
                 .name(createUserDto.getName())
