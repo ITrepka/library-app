@@ -15,7 +15,7 @@ public class Borrowing {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long borrowingId;
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private User borrowingUser;
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private BookCopy bookCopy;

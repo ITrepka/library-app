@@ -21,7 +21,7 @@ public class User {
     private String name;
     private String surname;
     private String address;
-    @OneToMany(mappedBy = "borrowingUser")
+    @OneToMany(mappedBy = "borrowingUser", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<Borrowing> borrowings;
     private Role role;
 }
