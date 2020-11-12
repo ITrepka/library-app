@@ -17,7 +17,7 @@ public class Borrowing {
     private Long borrowingId;
     @ManyToOne
     private User borrowingUser;
-    @OneToOne
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private BookCopy bookCopy;
     private OffsetDateTime borrowingBookDate;
     private OffsetDateTime returningBookDate;
