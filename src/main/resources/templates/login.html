@@ -1,10 +1,23 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pl" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Strona logowania</title>
+    <link rel="stylesheet" href="css/style-login-page.css" type="text/css" media="all"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;1,100;1,300&display=swap" rel="stylesheet">
 </head>
 <body>
-    <h1>Strona logowania</h1>
+<div class="container">
+    <h1>Obsługa Biblioteki</h1>
+    <hr>
+    <form th:action="@{/login}" method="post">
+        <label for="username">Email</label>
+        <input type="text" name="username" id="username"/>
+        <label for="password">Hasło</label>
+        <input type="password" name="password" id="password"/>
+        <button type="submit" name="login">Zaloguj się</button>
+    </form>
+</div>
 </body>
 </html>

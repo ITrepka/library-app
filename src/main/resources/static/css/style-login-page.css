@@ -1,0 +1,33 @@
+body {
+    font-family: 'Lato', sans-serif;
+    background: url(/img/login-page-background.jpg) no-repeat center center fixed;
+    background-size: cover;
+    position: relative;
+    height: 100vh;
+}
+
+form {
+    display: block;
+}
+
+input {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+label {
+    display: block;
+}
+
+.container {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 35%;
+    width: 20%;
+    text-align: center;
+    background-color: white;
+    color: black;
+    padding: 5%;
+}
