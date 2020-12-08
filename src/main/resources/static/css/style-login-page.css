@@ -10,24 +10,58 @@ form {
     display: block;
 }
 
+hr {
+    margin-left: -5%;
+    margin-right: -5%;
+    margin-bottom: 10%;
+    color: #DAAD86;
+}
+
 input {
     display: block;
-    margin-left: auto;
-    margin-right: auto;
+    width: 100%;
+    margin-bottom: 1%;
+    margin-top: 1%;
+    padding: 1%;
+    border: 1px solid #DAAD86;
+    background-color: #fbeec1;
 }
 
 label {
+    text-align: left;
     display: block;
+}
+
+h1 {
+    margin-bottom: 0;
+}
+
+button {
+    color: #659DBD;
+    margin-top: 10%;
+    padding: 3%;
+    border: 1px solid #8d8741;
+}
+
+button:hover {
+    background-color: #DAAD86;
+    color: #ffffff;
+    border: 1px solid #BC986A;
+    cursor: pointer;
 }
 
 .container {
     position: absolute;
-    top: 50%;
+    top: 55%;
     transform: translateY(-50%);
-    left: 35%;
+    left: 36.5%;
     width: 20%;
     text-align: center;
-    background-color: white;
-    color: black;
-    padding: 5%;
+    background-color: #659DBD;
+    color: #fff;
+    padding: 2% 5% 2% 5%;
+    opacity: 0.8;
+    border: 1px solid #DAAD86;
+    box-shadow: 5px 5px 5px #DAAD86;
+    border-radius: 3%;
 }
