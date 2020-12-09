@@ -4,16 +4,51 @@
     <meta charset="UTF-8">
     <title>Biblioteka</title>
     <link th:replace="layout :: head">
-    <link rel="stylesheet" href="css/styles-menu-page.css" type="text/css">
+    <link rel="stylesheet" href="my-css/styles-menu-page.css" type="text/css">
 </head>
 <body>
-    <h1>Hello Pretkej</h1>
-    <div class="container">
-
+<h1>Hello Pretkej</h1>
+<div class="container">
+    <div class="row">
+        <div class="col-2 offset-10">
+            <button class="logout">
+                Wyloguj się
+            </button>
+        </div>
     </div>
+    <div class="row">
+        <div class="col-2 offset-4">
+            <h1>Wybierz Moduł</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-4 offset-2">
+            <div class="menu-element tile1">
+                <h2>Książki</h2>
+            </div>
+        </div>
+        <div class="col-4 offset-2">
+            <div class="menu-element tile2">
+                <h2>Czytelnicy</h2>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-4 offset-2">
+            <div class="menu-element tile3">
+                <h2>Wypożyczenia</h2>
+            </div>
+        </div>
+        <div class="col-4 offset-2">
+            <div class="menu-element tile4">
+                <h2>Pomoc</h2>
+            </div>
+        </div>
+    </div>
+</div>
 
 
-    <!-- bootstrap script !-->
-    <div th:replace="layout :: body"></div>
+<!-- bootstrap script !-->
+<div th:replace="layout :: body"></div>
 </body>
 </html>
