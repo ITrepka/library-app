@@ -49,6 +49,7 @@ public class UserService {
 
         User user = userDtoMapper.toModel(createUserDto);
         user.setPenaltyForBooksNotReturnedOnTime(0d);
+        //todo role logic
         user.setRole(Role.READER);
         user.setPassword(passwordEncoder.encode(createUserDto.getPassword()));
         User savedUser = userRepository.save(user);

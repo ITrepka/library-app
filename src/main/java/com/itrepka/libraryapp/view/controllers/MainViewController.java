@@ -7,8 +7,8 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class MainViewController {
     @GetMapping({"", "/", "/index", "/index.html"})
-    public ModelAndView displayHomepage() {
-        ModelAndView mv = new ModelAndView("homepage");
+    public ModelAndView displayMenu() {
+        ModelAndView mv = new ModelAndView("menu");
         return mv;
     }
 
