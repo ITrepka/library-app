@@ -2,7 +2,6 @@ body {
     font-family: 'Lato', sans-serif;
     background: url(/img/login-page-background.jpg) no-repeat center center fixed;
     background-size: cover;
-    position: relative;
     height: 100vh;
 }
 
@@ -11,20 +10,14 @@ form {
 }
 
 hr {
-    margin-left: -5%;
-    margin-right: -5%;
-    margin-bottom: 10%;
-    color: #DAAD86;
+    border: 1px solid #DAAD86;
 }
 
 input {
     display: block;
-    width: 100%;
-    margin-bottom: 1%;
-    margin-top: 1%;
-    padding: 1%;
     border: 1px solid #DAAD86;
     background-color: #fbeec1;
+    width: 100%;
 }
 
 label {
@@ -32,15 +25,11 @@ label {
     display: block;
 }
 
-h1 {
-    margin-bottom: 0;
-}
-
 button {
     color: #659DBD;
-    margin-top: 10%;
-    padding: 3%;
     border: 1px solid #8d8741;
+    margin-top: 10%;
+    padding: 2%;
 }
 
 button:hover {
@@ -50,25 +39,25 @@ button:hover {
     cursor: pointer;
 }
 
-.container {
-    position: absolute;
-    top: 55%;
-    transform: translateY(-50%);
-    left: 36.5%;
-    width: 20%;
+h1 {
+    font-size: 200%;
+}
+
+.content {
     text-align: center;
     background-color: #659DBD;
     color: #fff;
-    padding: 2% 5% 2% 5%;
     opacity: 0.8;
     border: 1px solid #DAAD86;
     box-shadow: 5px 5px 5px #DAAD86;
     border-radius: 3%;
+    padding: 2% 5% 2% 5%;
 }
 
-@media screen and (max-width: 768px){
-    .container {
-        left: 26.5%;
-        width: 40%;
-    }
+.ceil {
+    height: 33vh;
+}
+
+.floor {
+    height: 33vh;
 }

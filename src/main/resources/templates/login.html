@@ -7,17 +7,27 @@
     <link rel="stylesheet" href="css/style-login-page.css" type="text/css" media="all"/>
 </head>
 <body>
-<div class="container">
-    <h1>Obsługa Biblioteki</h1>
-    <hr>
-    <form th:action="@{/login}" method="post">
-        <label for="username">Email</label>
-        <input type="text" name="username" id="username"/>
-        <label for="password">Hasło</label>
-        <input type="password" name="password" id="password"/>
-        <button type="submit" name="login"><b>Zaloguj się</b></button>
-    </form>
-</div>
-<script th:replace="layout :: body"></script>
+<section>
+    <div class="container">
+        <div class="row ceil"></div>
+        <div class="row">
+            <div class="col-md-4 offset-md-4 col-8 offset-2 content">
+                <h1>Obsługa Biblioteki</h1>
+                <hr>
+                <form th:action="@{/login}" method="post">
+                    <label for="username">Email</label>
+                    <input type="text" name="username" id="username"/>
+                    <label for="password">Hasło</label>
+                    <input type="password" name="password" id="password"/>
+                    <button type="submit" name="login"><b>Zaloguj się</b></button>
+                </form>
+            </div>
+        </div>
+        <div class="row floor"></div>
+    </div>
+</section>
+
+<!-- bootstrap script !-->
+<div th:replace="layout :: body"></div>
 </body>
 </html>
