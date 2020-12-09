@@ -10,6 +10,7 @@ import com.itrepka.libraryapp.service.exception.UserAlreadyExistException;
 import com.itrepka.libraryapp.service.exception.UserNotFoundException;
 import com.itrepka.libraryapp.service.mapper.UserDtoMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -22,6 +23,8 @@ public class UserService {
     private UserRepository userRepository;
     @Autowired
     private UserDtoMapper userDtoMapper;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     public List<UserDto> getAllUsers() {
         return userRepository.findAll().stream()
@@ -47,8 +50,7 @@ public class UserService {
         User user = userDtoMapper.toModel(createUserDto);
         user.setPenaltyForBooksNotReturnedOnTime(0d);
         user.setRole(Role.READER);
-        //todo password encrypter
-        user.setPassword(createUserDto.getPassword());
+        user.setPassword(passwordEncoder.encode(createUserDto.getPassword()));
         User savedUser = userRepository.save(user);
         return userDtoMapper.toDto(savedUser);
     }
