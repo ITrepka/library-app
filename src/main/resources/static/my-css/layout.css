@@ -1,0 +1,13 @@
+footer {
+    width: 100%;
+    display: table;
+    text-align: center;
+    height: 5vh;
+    background-color: #BC986A;
+    color: #DBEEC1;
+}
+
+footer p {
+    display: table-cell;
+    vertical-align: middle;
+}
