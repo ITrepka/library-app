@@ -1,0 +1,85 @@
+body {
+    font-family: 'Lato', sans-serif;
+    background: url(/img/menu-page-background.jpg) no-repeat center center fixed;
+    background-size: cover;
+    color: #ffffff;
+    min-height: 100vh;
+}
+
+h1 {
+    text-align: center;
+}
+
+tr {
+    vertical-align: middle;
+    text-align: center;
+}
+
+h1{
+    margin-top: 3vh;
+    margin-bottom: 5vh;
+}
+
+.background-overlay{
+    background-image: url(/img/main-background.png);
+    background-repeat: repeat;
+    opacity: 0.9;
+    min-height: 100vh;
+}
+
+.container {
+    min-height: 100vh;
+    padding-top: 10vh;
+}
+
+.table-head {
+    height: 60px;
+    background: #082d42;
+    color: white;
+}
+
+.scrollable {
+    max-height: 70vh;
+    overflow: scroll;
+}
+
+.gray-bg {
+    background-color: #9BA6A9;
+}
+
+.white-bg {
+    background-color: white;
+}
+
+.logout {
+    background-color: white;
+    text-align: right;
+}
+
+.logout:hover {
+    background-color: lightseagreen;
+    color: white;
+}
+
+.new {
+    background-color: lightseagreen;
+}
+
+.new:hover {
+    background-color: white;
+    color: lightseagreen;
+}
+
+.lghtgr:hover {
+    color: lightseagreen;
+}
+
+.my-acc {
+    background-color: #9BA6A9;
+    text-align: right;
+}
+
+.my-acc:hover {
+    background-color: white;
+    color: lightseagreen;
+}

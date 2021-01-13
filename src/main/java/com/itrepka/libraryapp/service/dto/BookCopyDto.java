@@ -16,4 +16,5 @@ public class BookCopyDto {
     private Long bookCopyId;
     private Long bookId;
     private List<Long> borrowingsIds;
+    private Boolean isAvailableToBorrow;
 }

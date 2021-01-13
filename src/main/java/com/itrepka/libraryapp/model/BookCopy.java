@@ -19,4 +19,5 @@ public class BookCopy {
     private Book book;
     @OneToMany(mappedBy = "bookCopy", fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<Borrowing> borrowings;
+    private Boolean isAvailableToBorrow;
 }

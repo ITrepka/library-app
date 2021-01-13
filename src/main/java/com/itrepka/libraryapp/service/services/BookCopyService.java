@@ -41,6 +41,7 @@ public class BookCopyService {
     @Transactional
     public BookCopyDto addNewBookCopy(CreateUpdateBookCopyDto createUpdateBookCopyDto) throws BookNotFoundException {
         BookCopy bookCopy = bookCopyDtoMapper.toModel(createUpdateBookCopyDto);
+        bookCopy.setIsAvailableToBorrow(true);
         BookCopy savedBookCopy = bookCopyRepository.save(bookCopy);
         return bookCopyDtoMapper.toDto(savedBookCopy);
     }

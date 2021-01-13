@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link th:replace="layout :: head">
+    <link rel="stylesheet" href="/my-css/style-table-page.css" type="text/css" media="all"/>
+</head>
+<body>
+<div class="background-overlay">
+    <div class="container">
+        <div class="row">
+            <div class="col-1"><a class="btn logout" th:href="@{/}">Menu</a></div>
+            <div class="col-4 offset-7 col-sm-3 offset-sm-8 col-md-2 offset-md-9 col-xl-1 offset-xl-10">
+                <a class="btn logout" th:href="@{/logout}">Wyloguj</a></div>
+        </div>
+        <h1>Lista Książek</h1>
+        <div class="row">
+            <div class="col-6 offset-md-2"><a th:href="@{/books/add-new}" class="btn new">Dodaj nową książkę</a>
+                <a th:href="@{/borrowings}" class="btn my-acc">Wypożyczenia</a>
+                <a th:href="@{/readers}" class="btn my-acc">Czytelnicy</a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+                <div class="scrollable">
+                    <table class="table table-bordered">
+                        <thead>
+                        <tr class="table-head">
+                            <th>ID Książki</th>
+                            <th>Tytuł</th>
+                            <th>Liczba Stron</th>
+                            <th>Autor</th>
+                            <th>Data Opublikowania</th>
+                            <th>Liczba egzemplarzy (dostępne/wypożyczone)</th>
+                            <th>Akcja</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="book: ${books}" th:classappend="${books.indexOf(book) % 2 == 0 ? 'white-bg' : 'gray-bg'}">
+                            <td th:text="${book.getBookId()}"></td>
+                            <td th:text="${book.getTitle()}"></td>
+                            <td th:text="${book.getPageCount()}"></td>
+                            <td th:text="${book.authorsFullNames}"></td>
+                            <td th:text="${book.getPublishedDate()}"></td>
+                            <td th:text="${book.getCopiesNumber()} + '(' + ${book.getAvailableToBorrow()}
+                        + '/' + ${book.getCurrentlyBorrowed()} + ')'"></td>
+                            <td>
+                                <a th:href="@{'/books/edit/' + ${book.getBookId()}}" class="btn lghtgr">Edytuj</a> |
+                                <a th:href="@{'/books/remove/' + ${book.getBookId()}}" class="btn lghtgr">Usuń</a>
+                            </td>
+                            <td><a th:href="@{'/borrowings/' + ${book.getBookId()}}" class="btn lghtgr">Wypożycz</a></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:replace="layout :: body"></div>
+</body>
+</html>
