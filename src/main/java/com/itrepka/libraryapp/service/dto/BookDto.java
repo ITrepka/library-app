@@ -2,6 +2,7 @@ package com.itrepka.libraryapp.service.dto;
 
 import lombok.*;
 
+import java.time.LocalDate;
 import java.time.OffsetDateTime;
 import java.util.List;
 
@@ -14,7 +15,7 @@ public class BookDto {
     private Long bookId;
     private String title;
     private Integer pageCount;
-    private OffsetDateTime publishedDate;
+    private LocalDate publishedDate;
     private List<Long> authorsIds;
     private String shortDescription;
     private String longDescription;

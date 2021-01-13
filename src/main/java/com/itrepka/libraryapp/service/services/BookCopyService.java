@@ -51,6 +51,8 @@ public class BookCopyService {
         BookCopy bookCopy = bookCopyRepository.findById(id)
                 .orElseThrow(() -> new BookCopyNotFoundException("Not found bookCopy with id = " + id));
 
+        bookCopy.setIsAvailableToBorrow(createUpdateBookCopyDto.getIsAvailableToBorrow());
+
         Book book = bookRepository.findById(createUpdateBookCopyDto.getBookId())
                 .orElseThrow(() -> new BookNotFoundException("Not Found Book with id = " + createUpdateBookCopyDto.getBookId()));
         bookCopy.setBook(book);

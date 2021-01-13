@@ -16,8 +16,7 @@ public class AuthorDtoMapper {
         List<Long> booksIds = author.getCreatedBooks().stream().map(Book::getBookId).collect(Collectors.toList());
         return AuthorDto.builder()
                 .authorId(author.getAuthorId())
-                .name(author.getName())
-                .surname(author.getSurname())
+                .fullName(author.getFullName())
                 .nickname(author.getNickname())
                 .birthplace(author.getBirthplace())
                 .birthYear(author.getBirthYear())
@@ -29,8 +28,7 @@ public class AuthorDtoMapper {
     public Author toModel(CreateUpdateAuthorDto createUpdateAuthorDto) {
         return Author.builder()
                 .authorId(null)
-                .name(createUpdateAuthorDto.getName())
-                .surname(createUpdateAuthorDto.getSurname())
+                .fullName(createUpdateAuthorDto.getFullName())
                 .nickname(createUpdateAuthorDto.getNickname())
                 .birthplace(createUpdateAuthorDto.getBirthplace())
                 .birthYear(createUpdateAuthorDto.getBirthYear())

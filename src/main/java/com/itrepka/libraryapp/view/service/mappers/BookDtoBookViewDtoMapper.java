@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class BookDtoBookViewDtoMapper {
@@ -30,8 +31,11 @@ public class BookDtoBookViewDtoMapper {
             bookCopyDtos.add(bookCopyDto);
         }
 
-        Long currentlyBorrowed = bookCopyDtos.stream().filter(BookCopyDto::getIsAvailableToBorrow).count();
-        Long availableToBorrow = bookCopyDtos.stream().filter(bookCopyDto -> !bookCopyDto.getIsAvailableToBorrow()).count();
+
+        System.out.println(bookCopyDtos);
+
+        Long availableToBorrow = Long.valueOf(bookCopyDtos.stream().filter(bookCopyDto -> bookCopyDto.getIsAvailableToBorrow() == true).collect(Collectors.toList()).size());
+        Long currentlyBorrowed = Long.valueOf(bookCopyDtos.stream().filter(bookCopyDto -> bookCopyDto.getIsAvailableToBorrow() == false).collect(Collectors.toList()).size());
 
         List<String> authorsFullNames = new ArrayList<>();
 
@@ -40,14 +44,14 @@ public class BookDtoBookViewDtoMapper {
         for (Long authorsId : authorsIds) {
             AuthorDto authorDto = authorService.getAuthorById(authorsId);
 
-            authorsFullNames.add(authorDto.getName() + " " + authorDto.getSurname());
+            authorsFullNames.add(authorDto.getFullName());
         }
 
         return BookViewDto.builder()
                 .bookId(bookDto.getBookId())
                 .pageCount(bookDto.getPageCount())
                 .title(bookDto.getTitle())
-                .publishedDate(bookDto.getPublishedDate().toLocalDate())
+                .publishedDate(bookDto.getPublishedDate())
                 .copiesNumber(bookDto.getBookCopiesIds().size())
                 .currentlyBorrowed(currentlyBorrowed)
                 .availableToBorrow(availableToBorrow)

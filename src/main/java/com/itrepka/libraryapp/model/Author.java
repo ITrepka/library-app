@@ -15,8 +15,7 @@ public class Author {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long authorId;
-    private String name;
-    private String surname;
+    private String fullName;
     private Integer birthYear;
     private Integer deathYear;
     private String birthplace;

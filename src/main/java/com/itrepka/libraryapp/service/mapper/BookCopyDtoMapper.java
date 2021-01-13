@@ -29,6 +29,7 @@ public class BookCopyDtoMapper {
                 .bookCopyId(bookCopy.getBookCopyId())
                 .bookId(bookId)
                 .borrowingsIds(borrowingsIds)
+                .isAvailableToBorrow(bookCopy.getIsAvailableToBorrow())
                 .build();
     }
 
@@ -40,6 +41,7 @@ public class BookCopyDtoMapper {
                 .bookCopyId(null)
                 .book(book)
                 .borrowings(new ArrayList<>())
+                .isAvailableToBorrow(null)
                 .build();
     }
 }

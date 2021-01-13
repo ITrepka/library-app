@@ -11,4 +11,5 @@ import lombok.NoArgsConstructor;
 @Data
 public class CreateUpdateBookCopyDto {
     private Long bookId;
+    private Boolean isAvailableToBorrow;
 }

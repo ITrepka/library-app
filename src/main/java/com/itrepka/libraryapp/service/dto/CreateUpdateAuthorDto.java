@@ -7,8 +7,7 @@ import lombok.*;
 @NoArgsConstructor
 @Data
 public class CreateUpdateAuthorDto {
-    private String name;
-    private String surname;
+    private String fullName;
     private String nickname;
     private Integer birthYear;
     private Integer deathYear;

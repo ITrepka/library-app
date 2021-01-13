@@ -3,6 +3,7 @@ package com.itrepka.libraryapp.model;
 import lombok.*;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.OffsetDateTime;
 import java.util.List;
 
@@ -18,7 +19,7 @@ public class Book {
     private Long bookId;
     private String title;
     private Integer pageCount;
-    private OffsetDateTime publishedDate;
+    private LocalDate publishedDate;
     @ManyToMany
     private List<Author> authors;
     private String shortDescription;

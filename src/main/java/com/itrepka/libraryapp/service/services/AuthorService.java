@@ -36,8 +36,7 @@ public class AuthorService {
 
     @Transactional
     public AuthorDto addNewAuthor(CreateUpdateAuthorDto createUpdateAuthorDto) throws AuthorAlreadyExistException {
-        boolean isExist = checkIsExist(createUpdateAuthorDto.getName(),
-                createUpdateAuthorDto.getSurname(), createUpdateAuthorDto.getBirthYear());
+        boolean isExist = checkIsExist(createUpdateAuthorDto.getFullName(), createUpdateAuthorDto.getBirthYear());
 
         if (isExist) {
             throw new AuthorAlreadyExistException("Author already exist");
@@ -53,15 +52,14 @@ public class AuthorService {
         Author author = authorRepository.findById(id)
                 .orElseThrow(() -> new AuthorNotFoundException("Not found author with id = " + id));
 
-        boolean isExist = checkIsExist(createUpdateAuthorDto.getName(),
-                createUpdateAuthorDto.getSurname(), createUpdateAuthorDto.getBirthYear());
+        boolean isExist = checkIsExist(createUpdateAuthorDto.getFullName(),
+                createUpdateAuthorDto.getBirthYear());
 
         if (isExist) {
             throw new AuthorAlreadyExistException("Author already exist");
         }
 
-        author.setName(createUpdateAuthorDto.getName());
-        author.setSurname(createUpdateAuthorDto.getSurname());
+        author.setFullName(createUpdateAuthorDto.getFullName());
         author.setBirthplace(createUpdateAuthorDto.getBirthplace());
         author.setBirthYear(createUpdateAuthorDto.getBirthYear());
         author.setDeathYear(createUpdateAuthorDto.getDeathYear());
@@ -79,9 +77,9 @@ public class AuthorService {
         return authorDtoMapper.toDto(author);
     }
 
-    private boolean checkIsExist(String name, String surname, Integer birthYear) {
+    private boolean checkIsExist(String name, Integer birthYear) {
         return getAllAuthors().stream()
-                .anyMatch(author -> author.getName().equalsIgnoreCase(name)
-                        && author.getSurname().equalsIgnoreCase(surname) && author.getBirthYear().equals(birthYear));
+                .anyMatch(author -> author.getFullName().equalsIgnoreCase(name)
+                        && author.getBirthYear().equals(birthYear));
     }
 }

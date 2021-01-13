@@ -15,8 +15,7 @@ import java.util.List;
 @Data
 public class AuthorDto {
     private Long authorId;
-    private String name;
-    private String surname;
+    private String fullName;
     private Integer birthYear;
     private Integer deathYear;
     private String birthplace;
