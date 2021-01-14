@@ -14,13 +14,18 @@
         </div>
         <h1>Lista Książek</h1>
         <div class="row">
-            <div class="col-6 offset-md-2"><a th:href="@{/books/add-new}" class="btn new">Dodaj nową książkę</a>
+            <div class="col-10 offset-md-1">
+                <form type="search" method="get" th:action="@{/books}">
+                    <input style="float: right" type="search" placeholder="Autor lub tytuł.." value="" name="s">
+                    <button style="float: right" type="submit" value="search">Szukaj</button>
+                </form>
+                <a th:href="@{/books/add-new}" class="btn new">Dodaj nową książkę</a>
                 <a th:href="@{/borrowings}" class="btn my-acc">Wypożyczenia</a>
                 <a th:href="@{/readers}" class="btn my-acc">Czytelnicy</a>
             </div>
         </div>
         <div class="row">
-            <div class="col-md-8 offset-md-2">
+            <div class="col-md-10 offset-md-1">
                 <div class="scrollable">
                     <table class="table table-bordered">
                         <thead>
@@ -45,9 +50,9 @@
                         + '/' + ${book.getCurrentlyBorrowed()} + ')'"></td>
                             <td>
                                 <a th:href="@{'/books/edit/' + ${book.getBookId()}}" class="btn lghtgr">Edytuj</a> |
-                                <a th:href="@{'/books/remove/' + ${book.getBookId()}}" class="btn lghtgr">Usuń</a>
+                                <a th:href="@{'/books/remove/' + ${book.getBookId()}}" class="btn lghtgr">Usuń</a> |
+                                <a th:href="@{'/books/info/' + ${book.getBookId()}}" class="btn lghtgr">Info</a> |
                             </td>
-                            <td><a th:href="@{'/borrowings/' + ${book.getBookId()}}" class="btn lghtgr">Wypożycz</a></td>
                         </tr>
                         </tbody>
                     </table>
