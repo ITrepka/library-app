@@ -7,7 +7,9 @@ import com.itrepka.libraryapp.service.exception.*;
 import com.itrepka.libraryapp.service.services.BookService;
 import com.itrepka.libraryapp.view.dtos.BookViewDto;
 import com.itrepka.libraryapp.view.dtos.CreateBookFormDto;
+import com.itrepka.libraryapp.view.dtos.UpdateBookFormDto;
 import com.itrepka.libraryapp.view.service.ViewService;
+import io.swagger.models.Model;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -53,6 +55,14 @@ public class BooksViewController {
     public ModelAndView removeBook(@PathVariable Long id) throws BookNotFoundException {
         BookDto bookDto = bookService.deleteBookById(id);
         ModelAndView mv = new ModelAndView("redirect:/books");
+        return mv;
+    }
+
+    @GetMapping("books/edit/{id}")
+    public ModelAndView displayBookEditForm(@PathVariable Long id) {
+        ModelAndView mv = new ModelAndView("edit-book");
+        UpdateBookFormDto updateBookFormDto = new UpdateBookFormDto();
+        mv.addObject("book", updateBookFormDto);
         return mv;
     }
 }

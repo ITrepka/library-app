@@ -5,51 +5,53 @@
     <link rel="stylesheet" href="/my-css/style-table-page.css" type="text/css" media="all"/>
 </head>
 <body>
-<div class="container">
-    <div class="row">
-        <div class="col-1"><a class="btn logout" th:href="@{/}">Menu</a></div>
-        <div class="col-4 offset-7 col-sm-3 offset-sm-8 col-md-2 offset-md-9 col-xl-1 offset-xl-10">
-            <a class="btn logout" th:href="@{/logout}">Wyloguj</a></div>
-    </div>
-    <h1>Dodaj nową książkę</h1>
-    <div class="row">
-        <div class="col-md-8 offset-md-2">
-            <div>
-                <table class="table table-bordered">
-                    <thead>
-                    <tr class="table-head">
-                        <th>Tytuł</th>
-                        <th>Autorzy (csv jeśli więcej niż 1)</th>
-                        <th>Liczba Stron</th>
-                        <th>Data Opublikowania</th>
-                        <th>Ilość Kopii</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr class="white-bg">
-                        <form th:action="@{/books/add-new}" th:object="${book}" method="post">
-                            <td>
-                                <input type="text" th:field="*{title}">
-                            </td>
-                            <td>
-                                <input type="text" th:field="*{authors}">
-                            </td>
-                            <td>
-                                <input type="number" th:field="*{pageCount}">
-                            </td>
-                            <td>
-                                <input type="date" th:field="*{publishedDate}">
-                            </td>
-                            <td>
-                                <input type="number" th:field="*{copiesNumber}">
-                            </td>
-                            <td>
-                                <button type="submit">Dodaj</button>
-                            </td>
-                        </form>
-                    </tr>
-                    </tbody>
-                </table>
+<div class="background-overlay">
+    <div class="container">
+        <div class="row">
+            <div class="col-1"><a class="btn logout" th:href="@{/books}">Książki</a></div>
+            <div class="col-4 offset-7 col-sm-3 offset-sm-8 col-md-2 offset-md-9 col-xl-1 offset-xl-10">
+                <a class="btn logout" th:href="@{/logout}">Wyloguj</a></div>
+        </div>
+        <h1>Dodaj nową książkę</h1>
+        <div class="row">
+            <div class="col-md-10 offset-md-1">
+                <div>
+                    <table class="table table-bordered">
+                        <thead>
+                        <tr class="table-head">
+                            <th>Tytuł</th>
+                            <th>Autorzy (csv jeśli więcej niż 1)</th>
+                            <th>Liczba Stron</th>
+                            <th>Data Opublikowania</th>
+                            <th>Ilość Kopii</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr class="white-bg">
+                            <form th:action="@{/books/add-new}" th:object="${book}" method="post">
+                                <td>
+                                    <input type="text" th:field="*{title}">
+                                </td>
+                                <td>
+                                    <input type="text" th:field="*{authors}">
+                                </td>
+                                <td>
+                                    <input type="number" th:field="*{pageCount}">
+                                </td>
+                                <td>
+                                    <input type="date" th:field="*{publishedDate}">
+                                </td>
+                                <td>
+                                    <input type="number" th:field="*{copiesNumber}">
+                                </td>
+                                <td>
+                                    <button type="submit">Dodaj</button>
+                                </td>
+                            </form>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
