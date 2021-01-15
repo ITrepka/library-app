@@ -8,11 +8,13 @@ import com.itrepka.libraryapp.service.services.BookCopyService;
 import com.itrepka.libraryapp.service.services.BookService;
 import com.itrepka.libraryapp.view.dtos.BookViewDto;
 import com.itrepka.libraryapp.view.dtos.CreateBookFormDto;
+import com.itrepka.libraryapp.view.dtos.UpdateBookFormDto;
 import com.itrepka.libraryapp.view.service.mappers.BookDtoBookViewDtoMapper;
 import com.itrepka.libraryapp.view.service.mappers.CreateBookFormDtoToCreateUpdateDtoMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -61,11 +63,69 @@ public class ViewService {
         List<BookCopyDto> bookCopyDtosList = new ArrayList<>();
         Integer copiesNumber = createBookFormDto.getCopiesNumber();
         for (int i = 0; i < copiesNumber; i++) {
-            CreateUpdateBookCopyDto createUpdateBookCopyDto = new CreateUpdateBookCopyDto(bookDto.getBookId(), true);
-            BookCopyDto bookCopyDto = bookCopyService.addNewBookCopy(createUpdateBookCopyDto);
+            BookCopyDto bookCopyDto = addBookCopyToDb(bookDto.getBookId());
             bookCopyDtosList.add(bookCopyDto);
         }
 
         return bookCopyDtosList;
+    }
+
+    private BookCopyDto addBookCopyToDb(Long bookId) throws BookNotFoundException {
+        CreateUpdateBookCopyDto createUpdateBookCopyDto = new CreateUpdateBookCopyDto(bookId, true);
+        return bookCopyService.addNewBookCopy(createUpdateBookCopyDto);
+    }
+
+    public UpdateBookFormDto getPreparedUpdateBookFormDto(Long id) throws BookNotFoundException, AuthorNotFoundException {
+        BookDto bookDto = bookService.getBookById(id);
+        List<Long> authorsIds = bookDto.getAuthorsIds();
+        StringBuilder authorsFullNames = new StringBuilder();
+
+        for (Long authorsId : authorsIds) {
+            String fullName = authorService.getAuthorById(authorsId).getFullName();
+            authorsFullNames.append(fullName).append(",");
+        }
+
+        String authors = authorsFullNames.toString().substring(0, authorsFullNames.toString().length() - 1);
+
+        UpdateBookFormDto updateBookFormDto = new UpdateBookFormDto();
+        updateBookFormDto.setBookId(bookDto.getBookId());
+        updateBookFormDto.setAuthors(authors);
+        updateBookFormDto.setPageCount(bookDto.getPageCount());
+        updateBookFormDto.setTitle(bookDto.getTitle());
+        updateBookFormDto.setPublishedDate(bookDto.getPublishedDate().toString());
+        updateBookFormDto.setNewCopies(0);
+
+        return updateBookFormDto;
+    }
+
+    public void updateBook(UpdateBookFormDto updateBookFormDto) throws BookNotFoundException, AuthorAlreadyExistException, AuthorNotFoundException {
+        CreateUpdateBookDto createUpdateBookDto = new CreateUpdateBookDto();
+
+        createUpdateBookDto.setTitle(updateBookFormDto.getTitle());
+        createUpdateBookDto.setPageCount(updateBookFormDto.getPageCount());
+        createUpdateBookDto.setPublishedDate(LocalDate.parse(updateBookFormDto.getPublishedDate()));
+
+        String authors = updateBookFormDto.getAuthors();
+
+        String[] authorsArr = authors.split(",");
+        for (String authorFullName : authorsArr) {
+            boolean authorExistAlready = authorService.getAllAuthors().stream()
+                    .anyMatch(authorDto -> authorDto.getFullName().equalsIgnoreCase(authorFullName));
+
+            if (!authorExistAlready) {
+                CreateUpdateAuthorDto createUpdateAuthorDto = new CreateUpdateAuthorDto();
+                createUpdateAuthorDto.setFullName(authorFullName);
+                AuthorDto authorDto = authorService.addNewAuthor(createUpdateAuthorDto);
+                CreateAuthorBookDto createAuthorBookDto = new CreateAuthorBookDto(authorDto.getAuthorId(), updateBookFormDto.getBookId());
+                authorBookService.addAuthorToBook(createAuthorBookDto);
+            }
+        }
+
+
+        Integer newCopies = updateBookFormDto.getNewCopies();
+
+        for (int i = 0; i < newCopies; i++) {
+            addBookCopyToDb(updateBookFormDto.getBookId());
+        }
     }
 }

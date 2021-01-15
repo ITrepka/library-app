@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class UpdateBookFormDto {
+    private Long bookId;
     private String title;
     private Integer pageCount;
     private String publishedDate;

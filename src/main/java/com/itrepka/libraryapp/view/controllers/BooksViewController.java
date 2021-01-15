@@ -59,10 +59,17 @@ public class BooksViewController {
     }
 
     @GetMapping("books/edit/{id}")
-    public ModelAndView displayBookEditForm(@PathVariable Long id) {
+    public ModelAndView displayBookEditForm(@PathVariable Long id) throws BookNotFoundException, AuthorNotFoundException {
+        UpdateBookFormDto updateBookFormDto = viewService.getPreparedUpdateBookFormDto(id);
         ModelAndView mv = new ModelAndView("edit-book");
-        UpdateBookFormDto updateBookFormDto = new UpdateBookFormDto();
         mv.addObject("book", updateBookFormDto);
+        return mv;
+    }
+
+    @PostMapping("books/edit")
+    public ModelAndView updateBook(@ModelAttribute(name = "book") UpdateBookFormDto updateBookFormDto) throws AuthorAlreadyExistException, BookNotFoundException, AuthorNotFoundException {
+        viewService.updateBook(updateBookFormDto);
+        ModelAndView mv = new ModelAndView("redirect:/books/info/" + updateBookFormDto.getBookId());
         return mv;
     }
 }
