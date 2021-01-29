@@ -12,13 +12,14 @@ import com.itrepka.libraryapp.view.service.ViewService;
 import io.swagger.models.Model;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Controller
 public class BooksViewController {
@@ -29,9 +30,15 @@ public class BooksViewController {
 
 
     @GetMapping("books")
-    public ModelAndView displayBooksTable() throws AuthorNotFoundException, BookCopyNotFoundException {
+    public ModelAndView displayBooksTable(@RequestParam(required = false) String s) throws AuthorNotFoundException, BookCopyNotFoundException {
         ModelAndView mv = new ModelAndView("books");
         List<BookViewDto> books = viewService.getBooksToDisplay();
+        if (s != null) {
+            books = books.stream()
+                    .filter(book -> book.getTitle().toLowerCase().contains(s.toLowerCase())
+                            || book.getAuthorsFullNames().toString().toLowerCase().contains(s.toLowerCase()))
+                    .collect(Collectors.toList());
+        }
         mv.addObject("books", books);
         return mv;
     }
