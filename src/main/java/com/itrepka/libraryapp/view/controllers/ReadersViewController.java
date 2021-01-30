@@ -51,25 +51,25 @@ public class ReadersViewController {
     }
 //
     @GetMapping("readers/remove/{id}")
-    public ModelAndView removereader(@PathVariable Long id) throws UserNotFoundException {
+    public ModelAndView removeReader(@PathVariable Long id) throws UserNotFoundException {
         UserDto userDto = userService.deleteUserById(id);
         ModelAndView mv = new ModelAndView("redirect:/readers");
         return mv;
     }
-//
-//    @GetMapping("readers/edit/{id}")
-//    public ModelAndView displayreaderEditForm(@PathVariable Long id) throws readerNotFoundException, AuthorNotFoundException {
-//        UpdatereaderFormDto updatereaderFormDto = viewService.getPreparedUpdatereaderFormDto(id);
-//        ModelAndView mv = new ModelAndView("edit-reader");
-//        mv.addObject("reader", updatereaderFormDto);
-//        return mv;
-//    }
-//
-//    @PostMapping("readers/edit")
-//    public ModelAndView updatereader(@ModelAttribute(name = "reader") UpdatereaderFormDto updatereaderFormDto) throws AuthorAlreadyExistException, readerNotFoundException, AuthorNotFoundException {
-//        viewService.updatereader(updatereaderFormDto);
-//        ModelAndView mv = new ModelAndView("redirect:/readers/info/" + updatereaderFormDto.getreaderId());
-//        return mv;
-//    }
+
+    @GetMapping("readers/edit/{id}")
+    public ModelAndView displayReaderEditForm(@PathVariable Long id) throws UserNotFoundException {
+        ReaderViewDto updateReaderDto = viewService.getPreparedUpdateReaderDto(id);
+        ModelAndView mv = new ModelAndView("edit-reader");
+        mv.addObject("reader", updateReaderDto);
+        return mv;
+    }
+
+    @PostMapping("readers/edit")
+    public ModelAndView updateReader(@ModelAttribute(name = "reader") ReaderViewDto updateReaderDto) throws UserNotFoundException, UserAlreadyExistException {
+        viewService.updateReader(updateReaderDto);
+        ModelAndView mv = new ModelAndView("redirect:/readers");
+        return mv;
+    }
     
 }

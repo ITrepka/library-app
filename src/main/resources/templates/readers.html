@@ -49,8 +49,8 @@
                             <td th:text="${reader.getAddress()}"></td>
                             <td th:text="${reader.getPenalty()} + 'zł'"></td>
                             <td>
-                                <a th:href="@{'/reader/edit/' + ${reader.getReaderId()}}" class="btn lghtgr">Edytuj</a> |
-                                <a th:href="@{'/reader/remove/' + ${reader.getReaderId()}}" class="btn lghtgr">Usuń</a> |
+                                <a th:href="@{'/readers/edit/' + ${reader.getReaderId()}}" class="btn lghtgr">Edytuj</a> |
+                                <a th:href="@{'/readers/remove/' + ${reader.getReaderId()}}" class="btn lghtgr">Usuń</a> |
                                 <!--                                <a th:href="@{'/books/info/' + ${book.getBookId()}}" class="btn lghtgr">Info</a> |-->
                             </td>
                         </tr>

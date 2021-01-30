@@ -62,7 +62,7 @@ public class UserService {
                 .orElseThrow(() -> new UserNotFoundException("Not found user with id = " + id));
 
         //todo
-        user.setPassword(updateUserDto.getPassword());
+//        user.setPassword(updateUserDto.getPassword());
         user.setPenaltyForBooksNotReturnedOnTime(updateUserDto.getPenaltyForBooksNotReturnedOnTime());
         user.setName(updateUserDto.getName());
         user.setSurname(updateUserDto.getSurname());

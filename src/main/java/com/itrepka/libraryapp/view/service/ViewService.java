@@ -5,10 +5,7 @@ import com.itrepka.libraryapp.service.dto.*;
 import com.itrepka.libraryapp.service.exception.*;
 import com.itrepka.libraryapp.service.services.*;
 import com.itrepka.libraryapp.view.dtos.*;
-import com.itrepka.libraryapp.view.service.mappers.BookDtoBookViewDtoMapper;
-import com.itrepka.libraryapp.view.service.mappers.CreateBookFormDtoToCreateUpdateDtoMapper;
-import com.itrepka.libraryapp.view.service.mappers.CreateReaderFormDtoToCreateUserDto;
-import com.itrepka.libraryapp.view.service.mappers.UserDtoToReaderViewDtoMapper;
+import com.itrepka.libraryapp.view.service.mappers.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -39,6 +36,8 @@ public class ViewService {
     private UserDtoToReaderViewDtoMapper readerViewMapper;
     @Autowired
     private CreateReaderFormDtoToCreateUserDto readerFormToCreateUserMapper;
+    @Autowired
+    private ReaderViewDtoToUpdateUserDtoMapper readerViewDtoToUpdateUserDtoMapper;
 
     public List<BookViewDto> getBooksToDisplay() throws AuthorNotFoundException, BookCopyNotFoundException {
         List<BookViewDto> books = new ArrayList<>();
@@ -157,5 +156,14 @@ public class ViewService {
     }
 
 
+    public ReaderViewDto getPreparedUpdateReaderDto(Long id) throws UserNotFoundException {
+        UserDto userDto = userService.getUserById(id);
+        return readerViewMapper.toReaderViewDto(userDto);
+    }
 
+    public void updateReader(ReaderViewDto updateReaderDto) throws UserNotFoundException, UserAlreadyExistException {
+        UpdateUserDto updateUserDto = readerViewDtoToUpdateUserDtoMapper.toUpdateDto(updateReaderDto);
+
+        userService.updateUserById(updateReaderDto.getReaderId(), updateUserDto);
+    }
 }
