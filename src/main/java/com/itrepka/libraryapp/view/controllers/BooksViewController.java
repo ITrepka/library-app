@@ -79,4 +79,10 @@ public class BooksViewController {
         ModelAndView mv = new ModelAndView("redirect:/books/info/" + updateBookFormDto.getBookId());
         return mv;
     }
+
+//    @GetMapping("books/info/{id}")
+//    public ModelAndView displayInfoAboutBook(@PathVariable Long id) {
+//        ModelAndView mv = new ModelAndView("info-book");
+//        return mv;
+//    }
 }
