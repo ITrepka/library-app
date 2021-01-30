@@ -1,6 +1,8 @@
 package com.itrepka.libraryapp.view.controllers;
 
+import com.itrepka.libraryapp.service.dto.UserDto;
 import com.itrepka.libraryapp.service.exception.*;
+import com.itrepka.libraryapp.service.services.UserService;
 import com.itrepka.libraryapp.view.dtos.CreateReaderFormDto;
 import com.itrepka.libraryapp.view.dtos.ReaderViewDto;
 import com.itrepka.libraryapp.view.service.ViewService;
@@ -16,6 +18,8 @@ import java.util.stream.Collectors;
 public class ReadersViewController {
     @Autowired
     private ViewService viewService;
+    @Autowired
+    private UserService userService;
 
     @GetMapping("readers")
     public ModelAndView displayreadersTable(@RequestParam(required = false) String s) {
@@ -46,12 +50,12 @@ public class ReadersViewController {
         return mv;
     }
 //
-//    @GetMapping("readers/remove/{id}")
-//    public ModelAndView removereader(@PathVariable Long id) throws readerNotFoundException {
-//        readerDto readerDto = readerService.deletereaderById(id);
-//        ModelAndView mv = new ModelAndView("redirect:/readers");
-//        return mv;
-//    }
+    @GetMapping("readers/remove/{id}")
+    public ModelAndView removereader(@PathVariable Long id) throws UserNotFoundException {
+        UserDto userDto = userService.deleteUserById(id);
+        ModelAndView mv = new ModelAndView("redirect:/readers");
+        return mv;
+    }
 //
 //    @GetMapping("readers/edit/{id}")
 //    public ModelAndView displayreaderEditForm(@PathVariable Long id) throws readerNotFoundException, AuthorNotFoundException {
