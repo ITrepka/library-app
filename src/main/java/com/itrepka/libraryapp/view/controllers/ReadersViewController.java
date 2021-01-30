@@ -1,6 +1,7 @@
 package com.itrepka.libraryapp.view.controllers;
 
 import com.itrepka.libraryapp.service.exception.*;
+import com.itrepka.libraryapp.view.dtos.CreateReaderFormDto;
 import com.itrepka.libraryapp.view.dtos.ReaderViewDto;
 import com.itrepka.libraryapp.view.service.ViewService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,20 +31,20 @@ public class ReadersViewController {
         return mv;
     }
 
-//    @GetMapping("readers/add-new")
-//    public ModelAndView displayFormToAddreader() {
-//        ModelAndView mv = new ModelAndView("add-reader");
-//        CreateReaderFormDto createreaderDto = new CreateReaderFormDto();
-//        mv.addObject("reader", createreaderDto);
-//        return mv;
-//    }
+    @GetMapping("readers/add-new")
+    public ModelAndView displayFormToAddreader() {
+        ModelAndView mv = new ModelAndView("add-reader");
+        CreateReaderFormDto createReaderDto = new CreateReaderFormDto();
+        mv.addObject("reader", createReaderDto);
+        return mv;
+    }
 //
-//    @PostMapping("readers/add-new")
-//    public ModelAndView addreaderToDb(@ModelAttribute(name = "reader") CreatereaderFormDto createreaderFormDto) throws readerAlreadyExistException, readerNotFoundException, AuthorNotFoundException, AuthorAlreadyExistException {
-//        List<readerCopyDto> readerCopyDtoList = viewService.addreaderToDbAndCreateCopies(createreaderFormDto);
-//        ModelAndView mv = new ModelAndView("redirect:/readers");
-//        return mv;
-//    }
+    @PostMapping("readers/add-new")
+    public ModelAndView addReaderToDb(@ModelAttribute(name = "reader") CreateReaderFormDto createReaderFormDto) throws UserAlreadyExistException {
+        viewService.addReaderToDb(createReaderFormDto);
+        ModelAndView mv = new ModelAndView("redirect:/readers");
+        return mv;
+    }
 //
 //    @GetMapping("readers/remove/{id}")
 //    public ModelAndView removereader(@PathVariable Long id) throws readerNotFoundException {

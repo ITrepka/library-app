@@ -4,19 +4,19 @@ import com.itrepka.libraryapp.model.Role;
 import com.itrepka.libraryapp.service.dto.*;
 import com.itrepka.libraryapp.service.exception.*;
 import com.itrepka.libraryapp.service.services.*;
-import com.itrepka.libraryapp.view.dtos.BookViewDto;
-import com.itrepka.libraryapp.view.dtos.CreateBookFormDto;
-import com.itrepka.libraryapp.view.dtos.ReaderViewDto;
-import com.itrepka.libraryapp.view.dtos.UpdateBookFormDto;
+import com.itrepka.libraryapp.view.dtos.*;
 import com.itrepka.libraryapp.view.service.mappers.BookDtoBookViewDtoMapper;
 import com.itrepka.libraryapp.view.service.mappers.CreateBookFormDtoToCreateUpdateDtoMapper;
+import com.itrepka.libraryapp.view.service.mappers.CreateReaderFormDtoToCreateUserDto;
 import com.itrepka.libraryapp.view.service.mappers.UserDtoToReaderViewDtoMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -37,6 +37,8 @@ public class ViewService {
     private UserService userService;
     @Autowired
     private UserDtoToReaderViewDtoMapper readerViewMapper;
+    @Autowired
+    private CreateReaderFormDtoToCreateUserDto readerFormToCreateUserMapper;
 
     public List<BookViewDto> getBooksToDisplay() throws AuthorNotFoundException, BookCopyNotFoundException {
         List<BookViewDto> books = new ArrayList<>();
@@ -138,7 +140,7 @@ public class ViewService {
         List<ReaderViewDto> readers = new ArrayList<>();
 
         allUsers = allUsers.stream()
-                .filter(userDto -> userDto.getRole().equals(Role.READER))
+                .filter(userDto -> userDto.getRole().equals(Role.READER.name()))
                 .collect(Collectors.toList());
 
         for (UserDto reader : allUsers) {
@@ -148,4 +150,12 @@ public class ViewService {
 
         return readers;
     }
+
+    public void addReaderToDb(CreateReaderFormDto createReaderFormDto) throws UserAlreadyExistException {
+        CreateUserDto createUserDto = readerFormToCreateUserMapper.toCreateUserMapper(createReaderFormDto);
+        userService.addNewUser(createUserDto);
+    }
+
+
+
 }
