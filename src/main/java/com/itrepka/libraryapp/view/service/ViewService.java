@@ -1,16 +1,16 @@
 package com.itrepka.libraryapp.view.service;
 
+import com.itrepka.libraryapp.model.Role;
 import com.itrepka.libraryapp.service.dto.*;
 import com.itrepka.libraryapp.service.exception.*;
-import com.itrepka.libraryapp.service.services.AuthorBookService;
-import com.itrepka.libraryapp.service.services.AuthorService;
-import com.itrepka.libraryapp.service.services.BookCopyService;
-import com.itrepka.libraryapp.service.services.BookService;
+import com.itrepka.libraryapp.service.services.*;
 import com.itrepka.libraryapp.view.dtos.BookViewDto;
 import com.itrepka.libraryapp.view.dtos.CreateBookFormDto;
+import com.itrepka.libraryapp.view.dtos.ReaderViewDto;
 import com.itrepka.libraryapp.view.dtos.UpdateBookFormDto;
 import com.itrepka.libraryapp.view.service.mappers.BookDtoBookViewDtoMapper;
 import com.itrepka.libraryapp.view.service.mappers.CreateBookFormDtoToCreateUpdateDtoMapper;
+import com.itrepka.libraryapp.view.service.mappers.UserDtoToReaderViewDtoMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,6 +33,10 @@ public class ViewService {
     private AuthorBookService authorBookService;
     @Autowired
     private BookCopyService bookCopyService;
+    @Autowired
+    private UserService userService;
+    @Autowired
+    private UserDtoToReaderViewDtoMapper readerViewMapper;
 
     public List<BookViewDto> getBooksToDisplay() throws AuthorNotFoundException, BookCopyNotFoundException {
         List<BookViewDto> books = new ArrayList<>();
@@ -127,5 +131,21 @@ public class ViewService {
         for (int i = 0; i < newCopies; i++) {
             addBookCopyToDb(updateBookFormDto.getBookId());
         }
+    }
+
+    public List<ReaderViewDto> getReadersToDisplay() {
+        List<UserDto> allUsers = userService.getAllUsers();
+        List<ReaderViewDto> readers = new ArrayList<>();
+
+        allUsers = allUsers.stream()
+                .filter(userDto -> userDto.getRole().equals(Role.READER))
+                .collect(Collectors.toList());
+
+        for (UserDto reader : allUsers) {
+            ReaderViewDto readerView = readerViewMapper.toReaderViewDto(reader);
+            readers.add(readerView);
+        }
+
+        return readers;
     }
 }

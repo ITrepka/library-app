@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link th:replace="layout :: head">
+    <link rel="stylesheet" href="/my-css/style-table-page.css" type="text/css" media="all"/>
+</head>
+<body>
+<div class="background-overlay">
+    <div class="container">
+        <div class="row">
+            <div class="col-1"><a class="btn logout" th:href="@{/}">Menu</a></div>
+            <div class="col-4 offset-7 col-sm-3 offset-sm-8 col-md-2 offset-md-9 col-xl-1 offset-xl-10">
+                <a class="btn logout" th:href="@{/logout}">Wyloguj</a></div>
+        </div>
+        <h1>Lista Czytelników</h1>
+        <div class="row">
+            <div class="col-10 offset-md-1">
+                <form type="search" method="get" th:action="@{/readers}">
+                    <input style="float: right" type="search" placeholder="Imie lub Nazwisko.." value="" name="s">
+                    <button style="float: right" type="submit" value="search">Szukaj</button>
+                </form>
+                <a th:href="@{/readers/add-new}" class="btn new">Dodaj nowego czytelnika</a>
+                <a th:href="@{/borrowings}" class="btn my-acc">Wypożyczenia</a>
+                <a th:href="@{/books}" class="btn my-acc">Książki</a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-10 offset-md-1">
+                <div class="scrollable">
+                    <table class="table table-bordered">
+                        <thead>
+                        <tr class="table-head">
+                            <th>ID Czytelnika</th>
+                            <th>Imię</th>
+                            <th>Nazwisko</th>
+                            <th>Email</th>
+                            <th>Adres</th>
+                            <th>Kara za nieoddane książki na czas</th>
+                            <th>Akcja</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="reader: ${readers}"
+                            th:classappend="${readers.indexOf(reader) % 2 == 0 ? 'white-bg' : 'gray-bg'}">
+                            <td th:text="${reader.getReaderId()}"></td>
+                            <td th:text="${reader.getName()}"></td>
+                            <td th:text="${reader.getSurname()}"></td>
+                            <td th:text="${reader.getEmail()}"></td>
+                            <td th:text="${reader.getAddress()}"></td>
+                            <td th:text="${reader.getPenalty()} + 'zł'"></td>
+                            <td>
+                                <a th:href="@{'/reader/edit/' + ${reader.getReaderId()}}" class="btn lghtgr">Edytuj</a> |
+                                <a th:href="@{'/reader/remove/' + ${reader.getReaderId()}}" class="btn lghtgr">Usuń</a> |
+                                <!--                                <a th:href="@{'/books/info/' + ${book.getBookId()}}" class="btn lghtgr">Info</a> |-->
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:replace="layout :: body"></div>
+</body>
+</html>
