@@ -86,4 +86,11 @@ public class UserService {
         return getAllUsers().stream()
                 .anyMatch(user -> user.getEmail().equalsIgnoreCase(email));
     }
+
+    public void updatePenaltyById(Long userId, Double penaltyForBooksNotReturnedOnTime) throws UserNotFoundException {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new UserNotFoundException("Not found user with id = " + userId));
+        user.setPenaltyForBooksNotReturnedOnTime(penaltyForBooksNotReturnedOnTime);
+        userRepository.save(user);
+    }
 }

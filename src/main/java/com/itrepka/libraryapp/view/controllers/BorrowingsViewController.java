@@ -41,7 +41,8 @@ public class BorrowingsViewController {
     }
 
     @GetMapping("borrowings/add-new")
-    public ModelAndView displayFormToAddBorrowing() throws AuthorNotFoundException, BookCopyNotFoundException {
+    public ModelAndView displayFormToAddBorrowing() throws AuthorNotFoundException, BookCopyNotFoundException, UserNotFoundException, BorrowingNotFoundException {
+        viewService.updatePenalties();
         ModelAndView mv = new ModelAndView("add-borrowing");
 
         List<BookViewDto> booksToDisplay = viewService.getBooksToDisplay();
@@ -49,7 +50,8 @@ public class BorrowingsViewController {
                 .collect(Collectors.toList());
 
         List<ReaderViewDto> readersToDisplay = viewService.getReadersToDisplay();
-        readersToDisplay = readersToDisplay.stream().filter(reader -> reader.getPenalty() < 0.001).collect(Collectors.toList());
+        readersToDisplay = readersToDisplay.stream()
+                .filter(reader -> reader.getPenalty() < 0.001).collect(Collectors.toList());
         CreateBorrowingFormDto createBorrowingDto = new CreateBorrowingFormDto();
         mv.addObject("readers", readersToDisplay);
         mv.addObject("borrowing", createBorrowingDto);

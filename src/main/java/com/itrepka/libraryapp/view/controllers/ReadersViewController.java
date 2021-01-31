@@ -23,7 +23,8 @@ public class ReadersViewController {
     private UserService userService;
 
     @GetMapping("readers")
-    public ModelAndView displayreadersTable(@RequestParam(required = false) String s) {
+    public ModelAndView displayreadersTable(@RequestParam(required = false) String s) throws UserNotFoundException, BorrowingNotFoundException {
+        viewService.updatePenalties();
         ModelAndView mv = new ModelAndView("readers");
         List<ReaderViewDto> readers = viewService.getReadersToDisplay();
         if (s != null) {

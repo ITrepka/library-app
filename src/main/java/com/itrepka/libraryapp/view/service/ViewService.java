@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -189,5 +190,40 @@ public class ViewService {
     public void addBorrowingToDb(CreateBorrowingFormDto createBorrowingDto) throws BookCopyNotFoundException, UserNotFoundException {
         CreateUpdateBorrowingDto createUpdateBorrowingDto = createBorrowingMapper.toCreateUpdateBorrowingDto(createBorrowingDto);
         BorrowingDto borrowingDto = borrowingService.addNewBorrowing(createUpdateBorrowingDto);
+    }
+
+    public void updatePenalties() throws UserNotFoundException, BorrowingNotFoundException {
+        List<UserDto> allUsers = userService.getAllUsers();
+
+        for (UserDto allUser : allUsers) {
+            UserDto userById = userService.getUserById(allUser.getUserId());
+            Double penaltyForBooksNotReturnedOnTime = userById.getPenaltyForBooksNotReturnedOnTime();
+
+            List<Long> borrowingsIds = userById.getBorrowingsIds();
+            List<BorrowingDto> borrowingDtos = new ArrayList<>();
+
+            for (Long borrowingsId : borrowingsIds) {
+                BorrowingDto borrowingById = borrowingService.getBorrowingById(borrowingsId);
+                borrowingDtos.add(borrowingById);
+            }
+
+            double penaltySum = 0.;
+
+            long count = borrowingDtos.stream()
+                    .filter(borrowingDto -> borrowingDto.getReturningBookDate() == null)
+                    .filter(borrowingDto -> {
+                        OffsetDateTime borrowingBookDate = borrowingDto.getBorrowingBookDate();
+                        return OffsetDateTime.now().isAfter(borrowingBookDate.plusDays(30));
+                    })
+                    .count();
+
+            penaltySum = count * 50.;
+
+            penaltyForBooksNotReturnedOnTime =
+                    penaltyForBooksNotReturnedOnTime > 0 ? penaltyForBooksNotReturnedOnTime : penaltySum;
+
+            userService.updatePenaltyById(userById.getUserId(), penaltyForBooksNotReturnedOnTime);
+        }
+
     }
 }
