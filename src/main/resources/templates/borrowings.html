@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link th:replace="layout :: head">
+    <link rel="stylesheet" href="/my-css/style-table-page.css" type="text/css" media="all"/>
+</head>
+<body>
+<div class="background-overlay">
+    <div class="container">
+        <div class="row">
+            <div class="col-1"><a class="btn logout" th:href="@{/}">Menu</a></div>
+            <div class="col-4 offset-7 col-sm-3 offset-sm-8 col-md-2 offset-md-9 col-xl-1 offset-xl-10">
+                <a class="btn logout" th:href="@{/logout}">Wyloguj</a></div>
+        </div>
+        <h1>Lista Książek</h1>
+        <div class="row">
+            <div class="col-10 offset-md-1">
+                <form type="search" method="get" th:action="@{/borrowings}">
+                    <input style="float: right" type="search" placeholder="Autor lub tytuł.." value="" name="s">
+                    <button style="float: right" type="submit" value="search">Szukaj</button>
+                </form>
+                <a th:href="@{/borrowings/add-new}" class="btn new">Dodaj nowe wypożyczenie</a>
+                <a th:href="@{/books}" class="btn my-acc">Książki</a>
+                <a th:href="@{/readers}" class="btn my-acc">Czytelnicy</a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-10 offset-md-1">
+                <div class="scrollable">
+                    <table class="table table-bordered">
+                        <thead>
+                        <tr class="table-head">
+                            <th>ID Wypożyczenia</th>
+                            <th>ID Egzemplarza</th>
+                            <th>Tytuł Książki</th>
+                            <th>Czytelnik</th>
+                            <th>Data Wypożyczenia</th>
+                            <th>Data Zwrotu</th>
+                            <th>Akcja</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="borrowing: ${borrowings}" th:classappend="${borrowings.indexOf(borrowing) % 2 == 0 ? 'white-bg' : 'gray-bg'}">
+                            <td th:text="${borrowing.getBorrowingId()}"></td>
+                            <td th:text="${borrowing.getBookCopyId()}"></td>
+                            <td th:text="${borrowing.getTitle()}"></td>
+                            <td th:text="${borrowing.getReader}"></td>
+                            <td th:text="${borrowing.getBorrowingDate()}"></td>
+                            <td th:if="${borrowing.getReturnDate() == null}" th:text=""></td>
+                            <td th:if="${borrowing.getReturnDate() != null}" th:text="${book.getReturnDate()}"></td>
+                            <td>
+                                <a th:href="@{'/borrowing/edit/' + ${book.getBookId()}}" class="btn lghtgr">Edytuj</a> |
+                                <a th:href="@{'/borrowing/remove/' + ${book.getBookId()}}" class="btn lghtgr">Usuń</a> |
+                                <!--                                <a th:href="@{'/books/info/' + ${book.getBookId()}}" class="btn lghtgr">Info</a> |-->
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:replace="layout :: body"></div>
+</body>
+</html>

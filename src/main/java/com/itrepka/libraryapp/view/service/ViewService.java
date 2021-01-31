@@ -1,5 +1,6 @@
 package com.itrepka.libraryapp.view.service;
 
+import com.itrepka.libraryapp.model.Borrowing;
 import com.itrepka.libraryapp.model.Role;
 import com.itrepka.libraryapp.service.dto.*;
 import com.itrepka.libraryapp.service.exception.*;
@@ -38,6 +39,10 @@ public class ViewService {
     private CreateReaderFormDtoToCreateUserDto readerFormToCreateUserMapper;
     @Autowired
     private ReaderViewDtoToUpdateUserDtoMapper readerViewDtoToUpdateUserDtoMapper;
+    @Autowired
+    private BorrowingService borrowingService;
+    @Autowired
+    private BorrowingDtoToBorrowingViewDtoMapper borrowingViewDtoMapper;
 
     public List<BookViewDto> getBooksToDisplay() throws AuthorNotFoundException, BookCopyNotFoundException {
         List<BookViewDto> books = new ArrayList<>();
@@ -165,5 +170,17 @@ public class ViewService {
         UpdateUserDto updateUserDto = readerViewDtoToUpdateUserDtoMapper.toUpdateDto(updateReaderDto);
 
         userService.updateUserById(updateReaderDto.getReaderId(), updateUserDto);
+    }
+
+    public List<BorrowingViewDto> getBorrowingsToDisplay() throws UserNotFoundException, BookCopyNotFoundException, BookNotFoundException {
+        List<BorrowingDto> allBorrowings = borrowingService.getAllBorrowings();
+        List<BorrowingViewDto> borrowingsToDisplay = new ArrayList<>();
+
+        for (BorrowingDto borrowing : allBorrowings) {
+            BorrowingViewDto borrowingViewDto = borrowingViewDtoMapper.toBorrowingViewDto(borrowing);
+            borrowingsToDisplay.add(borrowingViewDto);
+        }
+
+        return borrowingsToDisplay;
     }
 }
