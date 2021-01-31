@@ -15,6 +15,7 @@ public class BorrowingViewDto {
     private String title;
     private String reader;
     private LocalDate borrowingDate;
+    private LocalDate finalReturnDate;
     private LocalDate returnDate;
     private Long bookId;
     private Long readerId;

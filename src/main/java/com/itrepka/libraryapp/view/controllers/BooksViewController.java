@@ -76,7 +76,7 @@ public class BooksViewController {
     @PostMapping("books/edit")
     public ModelAndView updateBook(@ModelAttribute(name = "book") UpdateBookFormDto updateBookFormDto) throws AuthorAlreadyExistException, BookNotFoundException, AuthorNotFoundException {
         viewService.updateBook(updateBookFormDto);
-        ModelAndView mv = new ModelAndView("redirect:/books/info/" + updateBookFormDto.getBookId());
+        ModelAndView mv = new ModelAndView("redirect:/books" + updateBookFormDto.getBookId());
         return mv;
     }
 

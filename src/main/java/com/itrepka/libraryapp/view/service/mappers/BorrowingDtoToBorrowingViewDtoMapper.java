@@ -44,6 +44,7 @@ public class BorrowingDtoToBorrowingViewDtoMapper {
                 .title(title)
                 .reader(reader)
                 .borrowingDate(borrowingDate)
+                .finalReturnDate(borrowingDate.plusDays(30))
                 .returnDate(returnDate)
                 .build();
     }
