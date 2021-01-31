@@ -2,13 +2,11 @@ package com.itrepka.libraryapp.view.controllers;
 
 import com.itrepka.libraryapp.service.dto.BookCopyDto;
 import com.itrepka.libraryapp.service.dto.BookDto;
+import com.itrepka.libraryapp.service.dto.CreateUpdateBorrowingDto;
 import com.itrepka.libraryapp.service.exception.*;
 import com.itrepka.libraryapp.service.services.BookService;
 import com.itrepka.libraryapp.service.services.BorrowingService;
-import com.itrepka.libraryapp.view.dtos.BookViewDto;
-import com.itrepka.libraryapp.view.dtos.BorrowingViewDto;
-import com.itrepka.libraryapp.view.dtos.CreateBookFormDto;
-import com.itrepka.libraryapp.view.dtos.UpdateBookFormDto;
+import com.itrepka.libraryapp.view.dtos.*;
 import com.itrepka.libraryapp.view.service.ViewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -34,26 +32,36 @@ public class BorrowingsViewController {
             borrowings = borrowings.stream()
                     .filter(borrowing -> borrowing.getTitle().toLowerCase().contains(s.toLowerCase())
                             || borrowing.getReader().toLowerCase().contains(s.toLowerCase()))
+                    .sorted((b1, b2) -> b2.getBorrowingDate().compareTo(b1.getBorrowingDate()))
                     .collect(Collectors.toList());
         }
         mv.addObject("borrowings", borrowings);
         return mv;
     }
 
-//    @GetMapping("books/add-new")
-//    public ModelAndView displayFormToAddBook() {
-//        ModelAndView mv = new ModelAndView("add-book");
-//        CreateBookFormDto createBookDto = new CreateBookFormDto();
-//        mv.addObject("book", createBookDto);
-//        return mv;
-//    }
+    @GetMapping("borrowings/add-new")
+    public ModelAndView displayFormToAddBook() throws AuthorNotFoundException, BookCopyNotFoundException {
+        ModelAndView mv = new ModelAndView("add-borrowing");
+
+        List<BookViewDto> booksToDisplay = viewService.getBooksToDisplay();
+        booksToDisplay = booksToDisplay.stream().filter(book -> book.getAvailableToBorrow() > 0)
+                .collect(Collectors.toList());
+
+        List<ReaderViewDto> readersToDisplay = viewService.getReadersToDisplay();
+        readersToDisplay = readersToDisplay.stream().filter(reader -> reader.getPenalty() < 0.001).collect(Collectors.toList());
+        CreateBorrowingFormDto createBorrowingDto = new CreateBorrowingFormDto();
+        mv.addObject("readers", readersToDisplay);
+        mv.addObject("borrowing", createBorrowingDto);
+        mv.addObject("books", booksToDisplay);
+        return mv;
+    }
 //
-//    @PostMapping("books/add-new")
-//    public ModelAndView addBookToDb(@ModelAttribute(name = "book") CreateBookFormDto createBookFormDto) throws BookAlreadyExistException, BookNotFoundException, AuthorNotFoundException, AuthorAlreadyExistException {
-//        List<BookCopyDto> bookCopyDtoList = viewService.addBookToDbAndCreateCopies(createBookFormDto);
-//        ModelAndView mv = new ModelAndView("redirect:/books");
-//        return mv;
-//    }
+    @PostMapping("borrowings/add-new")
+    public ModelAndView addBookToDb(@ModelAttribute(name = "borrowing") CreateBorrowingFormDto createBorrowingDto) throws BookAlreadyExistException, BookNotFoundException, AuthorNotFoundException, AuthorAlreadyExistException {
+        viewService.addBorrowingToDb(createBorrowingDto);
+        ModelAndView mv = new ModelAndView("redirect:/books");
+        return mv;
+    }
 //
 //    @GetMapping("books/remove/{id}")
 //    public ModelAndView removeBook(@PathVariable Long id) throws BookNotFoundException {

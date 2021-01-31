@@ -43,6 +43,8 @@ public class ViewService {
     private BorrowingService borrowingService;
     @Autowired
     private BorrowingDtoToBorrowingViewDtoMapper borrowingViewDtoMapper;
+    @Autowired
+    private CreateBorrowingFormDtoToCreateUpdateBorrowingDtoMapper createBorrowingMapper;
 
     public List<BookViewDto> getBooksToDisplay() throws AuthorNotFoundException, BookCopyNotFoundException {
         List<BookViewDto> books = new ArrayList<>();
@@ -182,5 +184,10 @@ public class ViewService {
         }
 
         return borrowingsToDisplay;
+    }
+
+    public void addBorrowingToDb(CreateBorrowingFormDto createBorrowingDto) throws BookCopyNotFoundException, UserNotFoundException {
+        CreateUpdateBorrowingDto createUpdateBorrowingDto = createBorrowingMapper.toCreateUpdateBorrowingDto(createBorrowingDto);
+        BorrowingDto borrowingDto = borrowingService.addNewBorrowing(createUpdateBorrowingDto);
     }
 }

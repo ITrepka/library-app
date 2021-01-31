@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link th:replace="layout :: head">
+    <link rel="stylesheet" href="/my-css/style-table-page.css" type="text/css" media="all"/>
+</head>
+<body>
+<div class="background-overlay">
+    <div class="container">
+        <div class="row">
+            <div class="col-1"><a class="btn logout" th:href="@{/borrowings}">Wypożyczenia</a></div>
+            <div class="col-4 offset-7 col-sm-3 offset-sm-8 col-md-2 offset-md-9 col-xl-1 offset-xl-10">
+                <a class="btn logout" th:href="@{/logout}">Wyloguj</a></div>
+        </div>
+        <h1>Dodaj nowe wypożyczenie</h1>
+        <div class="row">
+            <div class="col-md-10 offset-md-1">
+                <div>
+                    <table class="table table-bordered">
+                        <thead>
+                        <tr class="table-head">
+                            <th>Książki dostępne do wypożyczenia</th>
+                            <th>Czytelnicy</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr class="white-bg">
+                            <form th:action="@{/borrowings/add-new}" th:object="${borrowing}" method="post">
+                                <td>
+                                    <select th:field="*{book}">
+                                        <option th:each="bookDto : ${books}" th:value="${bookDto}" th:text="${bookDto.getTitle()}"></option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select th:field="*{reader}">
+                                        <option th:each="readerDto : ${readers}" th:value="${readerDto}" th:text="${readerDto.getName()} + ' ' + ${readerDto.getSurname()}"></option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <button type="submit">Dodaj</button>
+                                </td>
+                            </form>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:replace="layout :: body"></div>
+</body>
+</html>
