@@ -1,6 +1,8 @@
 package com.itrepka.libraryapp.service.services;
 
 import com.itrepka.libraryapp.model.Book;
+import com.itrepka.libraryapp.model.BookCopy;
+import com.itrepka.libraryapp.repository.BookCopyRepository;
 import com.itrepka.libraryapp.repository.BookRepository;
 import com.itrepka.libraryapp.service.dto.BookDto;
 import com.itrepka.libraryapp.service.dto.CreateUpdateBookDto;
@@ -20,6 +22,8 @@ public class BookService {
     private BookRepository bookRepository;
     @Autowired
     private BookDtoMapper bookDtoMapper;
+    @Autowired
+    private BookCopyRepository bookCopyRepository;
 
     public List<BookDto> getAllBooks() {
         return bookRepository.findAll().stream()
@@ -77,6 +81,12 @@ public class BookService {
     public BookDto deleteBookById(long id) throws BookNotFoundException {
         Book book = bookRepository.findById(id)
                 .orElseThrow(() -> new BookNotFoundException("Not found book with id = " + id));
+
+
+        List<BookCopy> bookCopies = book.getBookCopies();
+        for (BookCopy bookCopy : bookCopies) {
+            bookCopyRepository.delete(bookCopy);
+        }
         bookRepository.deleteById(id);
         return bookDtoMapper.toDto(book);
     }

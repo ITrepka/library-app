@@ -2,8 +2,10 @@ package com.itrepka.libraryapp.service.services;
 
 import com.itrepka.libraryapp.model.Book;
 import com.itrepka.libraryapp.model.BookCopy;
+import com.itrepka.libraryapp.model.Borrowing;
 import com.itrepka.libraryapp.repository.BookCopyRepository;
 import com.itrepka.libraryapp.repository.BookRepository;
+import com.itrepka.libraryapp.repository.BorrowingRepository;
 import com.itrepka.libraryapp.service.dto.BookCopyDto;
 import com.itrepka.libraryapp.service.dto.CreateUpdateBookCopyDto;
 import com.itrepka.libraryapp.service.exception.BookCopyNotFoundException;
@@ -24,6 +26,8 @@ public class BookCopyService {
     private BookCopyDtoMapper bookCopyDtoMapper;
     @Autowired
     private BookRepository bookRepository;
+    @Autowired
+    private BorrowingRepository borrowingRepository;
 
     public List<BookCopyDto> getAllBookCopies() {
         return bookCopyRepository.findAll().stream()
@@ -65,6 +69,11 @@ public class BookCopyService {
     public BookCopyDto deleteBookCopyById(long id) throws BookCopyNotFoundException {
         BookCopy bookCopy = bookCopyRepository.findById(id)
                 .orElseThrow(() -> new BookCopyNotFoundException("Not found bookCopy with id = " + id));
+        List<Borrowing> borrowings = bookCopy.getBorrowings();
+        for (Borrowing borrowing : borrowings) {
+            borrowingRepository.delete(borrowing);
+        }
+
         bookCopyRepository.deleteById(id);
         return bookCopyDtoMapper.toDto(bookCopy);
     }

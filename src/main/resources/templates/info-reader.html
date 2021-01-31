@@ -8,22 +8,12 @@
 <div class="background-overlay">
     <div class="container">
         <div class="row">
-            <div class="col-1"><a class="btn logout" th:href="@{/}">Menu</a></div>
+            <div class="col-1"><a class="btn logout" th:href="@{/readers}">Czytelnicy</a></div>
             <div class="col-4 offset-7 col-sm-3 offset-sm-8 col-md-2 offset-md-9 col-xl-1 offset-xl-10">
                 <a class="btn logout" th:href="@{/logout}">Wyloguj</a></div>
         </div>
-        <h1>Lista Wypożyczeń</h1>
-        <div class="row">
-            <div class="col-10 offset-md-1">
-                <form type="search" method="get" th:action="@{/borrowings}">
-                    <input style="float: right" type="search" placeholder="Tytuł lub nazwisko czytelnika.." value="" name="s">
-                    <button style="float: right" type="submit" value="search">Szukaj</button>
-                </form>
-                <a th:href="@{/borrowings/add-new}" class="btn new">Dodaj nowe wypożyczenie</a>
-                <a th:href="@{/books}" class="btn my-acc">Książki</a>
-                <a th:href="@{/readers}" class="btn my-acc">Czytelnicy</a>
-            </div>
-        </div>
+        <h1>Historia Wypożyczeń Czytelnika</h1>
+
         <div class="row">
             <div class="col-md-10 offset-md-1">
                 <div class="scrollable">
@@ -44,12 +34,10 @@
                             <td th:text="${borrowing.getBorrowingId()}"></td>
                             <td th:text="${borrowing.getBookCopyId()}"></td>
                             <td th:text="${borrowing.getTitle()}"></td>
-                            <td th:text="${borrowing.getReader()}"></td>
+                            <td th:text="${borrowing.getReader}"></td>
                             <td th:text="${borrowing.getBorrowingDate()}"></td>
-                            <span th:if="${borrowing.getReturnDate() == null}"><td  th:text="${'Nie zwrócono'}"></td></span>
-                            <span th:unless="${borrowing.getReturnDate() == null}"><td  th:text="${borrowing.getReturnDate()}"></td></span>
-
-
+                            <td th:if="${borrowing.getReturnDate() == null}" th:text=""></td>
+                            <td th:if="${borrowing.getReturnDate() != null}" th:text="${book.getReturnDate()}"></td>
                             <td>
                                 <a th:href="@{'/borrowings/edit/' + ${borrowing.getBorrowingId()}}" class="btn lghtgr">Zwróć</a> |
                                 <a th:href="@{'/borrowings/remove/' + ${borrowing.getBorrowingId()}}" class="btn lghtgr">Usuń</a> |

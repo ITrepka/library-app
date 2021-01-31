@@ -3,6 +3,7 @@ package com.itrepka.libraryapp.view.controllers;
 import com.itrepka.libraryapp.service.dto.UserDto;
 import com.itrepka.libraryapp.service.exception.*;
 import com.itrepka.libraryapp.service.services.UserService;
+import com.itrepka.libraryapp.view.dtos.BorrowingViewDto;
 import com.itrepka.libraryapp.view.dtos.CreateReaderFormDto;
 import com.itrepka.libraryapp.view.dtos.ReaderViewDto;
 import com.itrepka.libraryapp.view.service.ViewService;
@@ -69,6 +70,18 @@ public class ReadersViewController {
     public ModelAndView updateReader(@ModelAttribute(name = "reader") ReaderViewDto updateReaderDto) throws UserNotFoundException, UserAlreadyExistException {
         viewService.updateReader(updateReaderDto);
         ModelAndView mv = new ModelAndView("redirect:/readers");
+        return mv;
+    }
+
+    @GetMapping("readers/info/{id}")
+    public ModelAndView displayInfoAboutBook(@PathVariable Long id) throws UserNotFoundException, BookCopyNotFoundException, BookNotFoundException {
+        List<BorrowingViewDto> borrowingsToDisplay = viewService.getBorrowingsToDisplay();
+        List<BorrowingViewDto> borrowings = borrowingsToDisplay.stream()
+                .filter(borrowing -> borrowing.getReaderId().equals(id))
+                .sorted((b1,b2) -> b2.getBorrowingDate().compareTo(b1.getBorrowingDate()))
+                .collect(Collectors.toList());
+        ModelAndView mv = new ModelAndView("info-reader");
+        mv.addObject("borrowings", borrowings);
         return mv;
     }
     

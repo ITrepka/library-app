@@ -77,7 +77,8 @@ public class BorrowingService {
     public BorrowingDto deleteBorrowingById(long id) throws BorrowingNotFoundException {
         Borrowing borrowing = borrowingRepository.findById(id)
                 .orElseThrow(() -> new BorrowingNotFoundException("Not found borrowing with id = " + id));
-        borrowingRepository.deleteById(id);
+        borrowingRepository.delete(borrowing);
+        System.out.println("Usunałem typa");
         return borrowingDtoMapper.toDto(borrowing);
     }
 

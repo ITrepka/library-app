@@ -19,18 +19,18 @@ public class CreateBorrowingFormDtoToCreateUpdateBorrowingDtoMapper {
     private BookCopyService bookCopyService;
 
     public CreateUpdateBorrowingDto toCreateUpdateBorrowingDto(CreateBorrowingFormDto createBorrowingFormDto) throws BookCopyNotFoundException {
-        ReaderViewDto reader = createBorrowingFormDto.getReader();
-        BookViewDto book = createBorrowingFormDto.getBook();
+        Long readerId = createBorrowingFormDto.getReaderId();
+        Long bookId = createBorrowingFormDto.getBookId();
 
         List<BookCopyDto> allBookCopies = bookCopyService.getAllBookCopies();
         BookCopyDto bookCopy = allBookCopies.stream().filter(BookCopyDto::getIsAvailableToBorrow)
-                .filter(bookCopyDto -> bookCopyDto.getBookId().equals(book.getBookId()))
+                .filter(bookCopyDto -> bookCopyDto.getBookId().equals(bookId))
                 .findFirst()
                 .orElseThrow(() -> new BookCopyNotFoundException("Not found available book copy"));
 
         return CreateUpdateBorrowingDto.builder()
                 .bookCopyId(bookCopy.getBookCopyId())
-                .borrowingUserId(reader.getReaderId())
+                .borrowingUserId(readerId)
                 .build();
     }
 }

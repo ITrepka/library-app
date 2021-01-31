@@ -17,7 +17,7 @@ public class BookCopy {
     private Long bookCopyId;
     @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Book book;
-    @OneToMany(mappedBy = "bookCopy", fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @OneToMany(mappedBy = "bookCopy", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
     private List<Borrowing> borrowings;
     private Boolean isAvailableToBorrow;
 }

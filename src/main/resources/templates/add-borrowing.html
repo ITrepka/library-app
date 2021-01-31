@@ -27,13 +27,13 @@
                         <tr class="white-bg">
                             <form th:action="@{/borrowings/add-new}" th:object="${borrowing}" method="post">
                                 <td>
-                                    <select th:field="*{book}">
-                                        <option th:each="bookDto : ${books}" th:value="${bookDto}" th:text="${bookDto.getTitle()}"></option>
+                                    <select th:field="*{bookId}">
+                                        <option th:each="bookDto : ${books}" th:value="${bookDto.bookId}" th:text="${bookDto.getTitle()}"></option>
                                     </select>
                                 </td>
                                 <td>
-                                    <select th:field="*{reader}">
-                                        <option th:each="readerDto : ${readers}" th:value="${readerDto}" th:text="${readerDto.getName()} + ' ' + ${readerDto.getSurname()}"></option>
+                                    <select th:field="*{readerId}">
+                                        <option th:each="readerDto : ${readers}" th:value="${readerDto.readerId}" th:text="${readerDto.getName()} + ' ' + ${readerDto.getSurname()}"></option>
                                     </select>
                                 </td>
                                 <td>

@@ -27,7 +27,7 @@ public class BorrowingDtoToBorrowingViewDtoMapper {
 
     public BorrowingViewDto toBorrowingViewDto(BorrowingDto borrowingDto) throws UserNotFoundException, BookCopyNotFoundException, BookNotFoundException {
         LocalDate borrowingDate = borrowingDto.getBorrowingBookDate().toLocalDate();
-        LocalDate returnDate = borrowingDto.getReturningBookDate().toLocalDate();
+        LocalDate returnDate = borrowingDto.getReturningBookDate() == null ? null : borrowingDto.getReturningBookDate().toLocalDate();
         Long readerId = borrowingDto.getBorrowingUserId();
         UserDto userDto = userService.getUserById(readerId);
         String reader = userDto.getName() + " " + userDto.getSurname();

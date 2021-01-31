@@ -10,6 +10,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class CreateBorrowingFormDto {
-    private ReaderViewDto reader;
-    private BookViewDto book;
+    private Long readerId;
+    private Long bookId;
 }

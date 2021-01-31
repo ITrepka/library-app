@@ -20,13 +20,13 @@ public class Book {
     private String title;
     private Integer pageCount;
     private LocalDate publishedDate;
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
     private List<Author> authors;
     private String shortDescription;
     private String longDescription;
     private String thumbnailUrl;
     @ManyToMany
     private List<Category> categories;
-    @OneToMany(mappedBy = "book", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @OneToMany(mappedBy = "book", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
     private List<BookCopy> bookCopies;
 }
