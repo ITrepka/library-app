@@ -2,6 +2,7 @@ package com.itrepka.libraryapp.view.controllers;
 
 import com.itrepka.libraryapp.service.dto.BookCopyDto;
 import com.itrepka.libraryapp.service.dto.BookDto;
+import com.itrepka.libraryapp.service.dto.BorrowingDto;
 import com.itrepka.libraryapp.service.dto.CreateUpdateBorrowingDto;
 import com.itrepka.libraryapp.service.exception.*;
 import com.itrepka.libraryapp.service.services.BookService;
@@ -25,7 +26,7 @@ public class BorrowingsViewController {
 
 
     @GetMapping("borrowings")
-    public ModelAndView displayBooksTable(@RequestParam(required = false) String s) throws AuthorNotFoundException, BookCopyNotFoundException, BookNotFoundException, UserNotFoundException {
+    public ModelAndView displayBorrowingsTable(@RequestParam(required = false) String s) throws AuthorNotFoundException, BookCopyNotFoundException, BookNotFoundException, UserNotFoundException {
         ModelAndView mv = new ModelAndView("borrowings");
         List<BorrowingViewDto> borrowings = viewService.getBorrowingsToDisplay();
         if (s != null) {
@@ -40,7 +41,7 @@ public class BorrowingsViewController {
     }
 
     @GetMapping("borrowings/add-new")
-    public ModelAndView displayFormToAddBook() throws AuthorNotFoundException, BookCopyNotFoundException {
+    public ModelAndView displayFormToAddBorrowing() throws AuthorNotFoundException, BookCopyNotFoundException {
         ModelAndView mv = new ModelAndView("add-borrowing");
 
         List<BookViewDto> booksToDisplay = viewService.getBooksToDisplay();
@@ -57,31 +58,23 @@ public class BorrowingsViewController {
     }
 //
     @PostMapping("borrowings/add-new")
-    public ModelAndView addBookToDb(@ModelAttribute(name = "borrowing") CreateBorrowingFormDto createBorrowingDto) throws BookAlreadyExistException, BookNotFoundException, AuthorNotFoundException, AuthorAlreadyExistException {
+    public ModelAndView addBorrowingToDb(@ModelAttribute(name = "borrowing") CreateBorrowingFormDto createBorrowingDto) throws BookAlreadyExistException, BookNotFoundException, AuthorNotFoundException, AuthorAlreadyExistException, BookCopyNotFoundException, UserNotFoundException {
         viewService.addBorrowingToDb(createBorrowingDto);
-        ModelAndView mv = new ModelAndView("redirect:/books");
+        ModelAndView mv = new ModelAndView("redirect:/borrowings");
         return mv;
     }
 //
-//    @GetMapping("books/remove/{id}")
-//    public ModelAndView removeBook(@PathVariable Long id) throws BookNotFoundException {
-//        BookDto bookDto = bookService.deleteBookById(id);
-//        ModelAndView mv = new ModelAndView("redirect:/books");
-//        return mv;
-//    }
+    @GetMapping("borrowings/remove/{id}")
+    public ModelAndView removeBorrowing(@PathVariable Long id) throws BookNotFoundException, BorrowingNotFoundException {
+        borrowingService.deleteBorrowingById(id);
+        ModelAndView mv = new ModelAndView("redirect:/borrowings");
+        return mv;
+    }
 //
-//    @GetMapping("books/edit/{id}")
-//    public ModelAndView displayBookEditForm(@PathVariable Long id) throws BookNotFoundException, AuthorNotFoundException {
-//        UpdateBookFormDto updateBookFormDto = viewService.getPreparedUpdateBookFormDto(id);
-//        ModelAndView mv = new ModelAndView("edit-book");
-//        mv.addObject("book", updateBookFormDto);
-//        return mv;
-//    }
-//
-//    @PostMapping("books/edit")
-//    public ModelAndView updateBook(@ModelAttribute(name = "book") UpdateBookFormDto updateBookFormDto) throws AuthorAlreadyExistException, BookNotFoundException, AuthorNotFoundException {
-//        viewService.updateBook(updateBookFormDto);
-//        ModelAndView mv = new ModelAndView("redirect:/books/info/" + updateBookFormDto.getBookId());
-//        return mv;
-//    }
+    @GetMapping("borrowings/edit/{id}")
+    public ModelAndView returnBorrowing(@PathVariable Long id) throws BookNotFoundException, AuthorNotFoundException, BorrowingNotFoundException {
+        BorrowingDto borrowingDto = borrowingService.returnBorrowingById(id);
+        ModelAndView mv = new ModelAndView("redirect:/borrowings");
+        return mv;
+    }
 }

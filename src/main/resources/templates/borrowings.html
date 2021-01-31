@@ -49,8 +49,8 @@
                             <td th:if="${borrowing.getReturnDate() == null}" th:text=""></td>
                             <td th:if="${borrowing.getReturnDate() != null}" th:text="${book.getReturnDate()}"></td>
                             <td>
-                                <a th:href="@{'/borrowing/edit/' + ${book.getBookId()}}" class="btn lghtgr">Edytuj</a> |
-                                <a th:href="@{'/borrowing/remove/' + ${book.getBookId()}}" class="btn lghtgr">Usuń</a> |
+                                <a th:href="@{'/borrowings/edit/' + ${borrowing.getBorrowingId()}}" class="btn lghtgr">Zwróć</a> |
+                                <a th:href="@{'/borrowings/remove/' + ${borrowing.getBorrowingId()}}" class="btn lghtgr">Usuń</a> |
                                 <!--                                <a th:href="@{'/books/info/' + ${book.getBookId()}}" class="btn lghtgr">Info</a> |-->
                             </td>
                         </tr>

@@ -80,4 +80,12 @@ public class BorrowingService {
         borrowingRepository.deleteById(id);
         return borrowingDtoMapper.toDto(borrowing);
     }
+
+    public BorrowingDto returnBorrowingById(Long id) throws BorrowingNotFoundException {
+        Borrowing borrowing = borrowingRepository.findById(id)
+                .orElseThrow(() -> new BorrowingNotFoundException("Not found borrowing with id = " + id));
+        borrowing.setReturningBookDate(OffsetDateTime.now());
+        Borrowing savedBorrowing = borrowingRepository.save(borrowing);
+        return borrowingDtoMapper.toDto(savedBorrowing);
+    }
 }

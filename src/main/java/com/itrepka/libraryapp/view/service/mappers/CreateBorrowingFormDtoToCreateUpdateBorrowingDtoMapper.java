@@ -16,8 +16,6 @@ import java.util.List;
 @Service
 public class CreateBorrowingFormDtoToCreateUpdateBorrowingDtoMapper {
     @Autowired
-    private BookService bookService;
-    @Autowired
     private BookCopyService bookCopyService;
 
     public CreateUpdateBorrowingDto toCreateUpdateBorrowingDto(CreateBorrowingFormDto createBorrowingFormDto) throws BookCopyNotFoundException {
@@ -25,7 +23,7 @@ public class CreateBorrowingFormDtoToCreateUpdateBorrowingDtoMapper {
         BookViewDto book = createBorrowingFormDto.getBook();
 
         List<BookCopyDto> allBookCopies = bookCopyService.getAllBookCopies();
-        BookCopyDto bookCopy = allBookCopies.stream().filter(bookCopyDto -> bookCopyDto.getIsAvailableToBorrow())
+        BookCopyDto bookCopy = allBookCopies.stream().filter(BookCopyDto::getIsAvailableToBorrow)
                 .filter(bookCopyDto -> bookCopyDto.getBookId().equals(book.getBookId()))
                 .findFirst()
                 .orElseThrow(() -> new BookCopyNotFoundException("Not found available book copy"));
