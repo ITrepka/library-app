@@ -26,15 +26,13 @@
         <nav>
             <div class="container book-background">
                 <div class="row">
-                    <div class="col-4 offset-1 outer">
-                        <a th:href="@{/books}">
+                    <div onclick="location.href='/books';" class="col-4 offset-1 outer">
                             <div class="menu-element tile1">
                                 <i class="icon-book"></i>
                                 <h2>Książki</h2>
                             </div>
-                        </a>
                     </div>
-                    <div class="col-4 offset-2 outer">
+                    <div onclick="location.href='/readers';" class="col-4 offset-2 outer">
                         <div class="menu-element tile2">
                             <i class="icon-users"></i>
                             <h2>Czytelnicy</h2>
@@ -42,13 +40,13 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-4 offset-1 outer">
+                    <div onclick="location.href='/borrowings';" class="col-4 offset-1 outer">
                         <div class="menu-element tile3">
                             <i class="icon-bookmark"></i>
                             <h2>Wypożyczenia</h2>
                         </div>
                     </div>
-                    <div class="col-4 offset-2 outer">
+                    <div onclick="location.href='/help';" class="col-4 offset-2 outer">
                         <div class="menu-element tile4">
                             <i class="icon-wrench"></i>
                             <h2>Pomoc</h2>
