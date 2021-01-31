@@ -37,7 +37,9 @@ public class AppConfig extends WebSecurityConfigurerAdapter {
             "/img/**",
             "/js/**",
             "/vendor/**",
-            "/scss/**"
+            "/scss/**",
+            "/my-css/**",
+            "/font/**"
     };
 
     @Override
@@ -46,7 +48,7 @@ public class AppConfig extends WebSecurityConfigurerAdapter {
         .authorizeRequests()
                 .antMatchers("/admin/**").hasRole("ADMIN")
                 .antMatchers(staticResources).permitAll()
-                .antMatchers("/**").permitAll()
+                .antMatchers("/**").hasRole("ADMIN")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()

@@ -13,7 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -25,6 +27,12 @@ public class UserService {
     private UserDtoMapper userDtoMapper;
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+//    @PostConstruct
+//    public void init() {
+//        userRepository.save(new User(0l, "admin", passwordEncoder.encode("admin"), 0., "Ireneusz", "Trepka",
+//                "WSB Warszawa", new ArrayList<>(), Role.ADMIN));
+//    }
 
     public List<UserDto> getAllUsers() {
         return userRepository.findAll().stream()
